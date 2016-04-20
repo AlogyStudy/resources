@@ -129,7 +129,8 @@
 	- [类似于Excel编辑表格-handsontable](http://handsontable.com/)
 	- [bootstrap-table插件](http://bootstrap-table.wenzhixin.net.cn/)
 	- [datatables](https://www.datatables.net/)
-
+####密码强度检测
+	- [密码强度检测](http://password.mx500.com/)
 
 
 
@@ -280,10 +281,9 @@
 	- [jQuery API 中文文档](http://jquery.bootcss.com/)
 	- [hemin 在线版](http://hemin.cn/jq/)
 	- [css88 jq api](http://www.css88.com/jqapi-1.9/on/)
-	- [css88 jqui api](http://www.css88.com/jquery-ui-api/)
 	- [学习jquery](http://learn.jquery.com/)
 	- [jquery 源码查找](http://james.padolsey.com/jquery/)
-	
+	- [jqueryBugs](https://bugs.jquery.com/)
 	
 	
 	
@@ -492,9 +492,9 @@
 
 
 
-
-
-
+###stylus
+	- [stylus中文文档-张鑫旭](http://www.zhangxinxu.com/jq/stylus)
+	- [Stylus让CSS也能编程](http://blog.fens.me/nodejs-stylus-css/);
 
 ###Vue
 	- [Vue](http://cn.vuejs.org/)
@@ -607,11 +607,13 @@
 	- [常见排序算法-js版本](https://github.com/hechangmin/jssort)
 	- [JavaScript 算法与数据结构 精华集](https://github.com/lightningtgc/JavaScript-Algorithms)
 	- [面试常考算法题精讲](http://www.nowcoder.com/live/courses)
-
-
-
-
-
+	- [快速排序演示](http://student.zjzk.cn/course_ware/data_structure/web/flashhtml/kuaisupaixu.htm)
+	- [算法速度演示](http://www.sorting-algorithms.com)
+	- [算法为王系列](http://blog.fens.me/series-algorithm/)
+	- [算法系列15天速成](http://www.cnblogs.com/huangxincheng/category/340146.html)
+	- [常用算法](http://www.cnblogs.com/tuyile006/category/95974.html)
+	- [牛客网-算法视频](http://www.nowcoder.com/courses/6)
+	- [直观感受几种常用排序算法](http://www.cnblogs.com/wangfupeng1988/archive/2011/12/26/2302216.html)
 
 #NodeJS
 
