@@ -2,14 +2,14 @@
 
 #WEB
 
-###HTTP
-- [HTTP API 设计指南](http://segmentfault.com/bookmark/1230000002521721)
 ###PHP
 	
 ###Apache
 
 ###MySql
 
+###HTTP
+- [HTTP API 设计指南](http://segmentfault.com/bookmark/1230000002521721)
 ###算法
 - [数据结构与算法 JavaScript 描述. 章节练习](https://github.com/Ralph-Wang/algorithm.in.js)
 - [常见排序算法（JS版）](https://github.com/twobin/twobinSort)
@@ -57,5 +57,9 @@
 - [fastclick](https://github.com/ftlabs/fastclick)
 - [no-click-delay](https://github.com/mmastrac/jquery-noclickdelay)
 - [HTML 5接口全方位测试总结文](http://mp.weixin.qq.com/s?__biz=MjM5MTk1NjI0MA==&mid=207632461&idx=1&sn=a8b00391f244c3bcbe1c2e9f22c7b107#rd)
+- [[WebApp]定宽网页设计下，固定宽度布局开发WebApp并实现多终端下WebApp布局自适应](http://www.cnblogs.com/plums/archive/2013/01/10/WebApp-fixed-width-layout-of-multi-terminal-adapter-since.html)
+- [判断微信客户端的那些坑](http://loo2k.com/blog/detecting-wechat-client/)
+- [移动端跨平台开发的各种技术](http://fex.baidu.com/blog/2015/05/cross-mobile/)
+- [JiaThis 分享到微信代码](http://www.jiathis.com/help/html/weixin-share-code)
 	
 

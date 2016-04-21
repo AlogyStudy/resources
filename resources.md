@@ -10,9 +10,6 @@
 - [免费的编程中文书籍索引](https://github.com/justjavac/free-programming-books-zh_CN)
 - [重新介绍 JavaScript（JS 教程）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
 - [JS函数式编程指南](http://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch1.html)
-
-
-
 ###API
 - [极客学院Wiki](http://wiki.jikexueyuan.com)
 - [runoob.com](http://www.runoob.com)
@@ -42,14 +39,6 @@
 - [div.io框架](http://div.io/digg)
 - [前端资源库](https://www.awesomes.cn)	
 - [bootcdn](http://www.bootcdn.cn)
-	
-	
-	
-	
-	
-	
-	
-	
 ###开发中心
 - [mozilla js参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
 - [chrome开发中心（chrome的内核已转向blink）](http://developer.chrome.com/extensions/api_index.html)
@@ -60,10 +49,6 @@
 - [js秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)
 - [w3help,综合Bug集合网站](http://www.w3help.org/) 
 - [JavaScript核心](http://weizhifeng.net/javascript-the-core.html)
-
-
-
-
 
 
 ###兼容性
@@ -77,8 +62,6 @@
 - [Modernizr: the feature detection library for HTML5/CSS3](https://modernizr.com)
 - [NEC : 更好的CSS样式解决方案](http://nec.netease.com)
 
-
-
 ###正则
 - [JS正则表达式元字符](http://segmentfault.com/a/1190000002471140)
 - [正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
@@ -87,10 +70,6 @@
 - [小胡子哥 - 进阶正则表达式](http://div.io/topic/764?page=1)
 - [is.js](https://github.com/Cedriking/is.js/blob/master/is.js)
 - [正则在线测试](http://regexper.com/)
-	
-	
-
-
 	
 ###自动化
 ####Gulp 
@@ -108,6 +87,7 @@
 - [Gulp in Action](http://www.imooc.com/video/5692)
 - [Gulp开发教程（翻译）](http://www.w3ctech.com/topic/134)
 - [前端构建工具gulpjs的使用介绍及技巧](http://www.cnblogs.com/2050/p/4198792.html)
+- [前端自动化测试](http://www.zhihu.com/question/29922082)	
 
 ####Grunt
 - [gruntjs](http://gruntjs.com/)
@@ -130,6 +110,9 @@
 - [js 在线编辑 - jsdm](http://jsdm.com)
 
 
+###git
+- [book](http://git-scm.com/book/zh)
+- [git教学](http://gogojimmy.net/2012/01/17/how-to-use-git-1-git-basic)
 
 
 #类库
