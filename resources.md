@@ -2,7 +2,7 @@
 #资源
 
 ###综合
--[前端知识结构](https://github.com/JacksonTian/fks)
+-[前端知识结构](https://github.com/JacksonTian/fks)<br/>
 -[Web前端开发大系概览](https://github.com/unruledboy/WebFrontEndStack)
 -[Web前端开发大系概览-中文版](http://www.cnblogs.com/unruledboy/p/WebFrontEndStack.html)
 -[免费的编程中文书籍索引](https://github.com/justjavac/free-programming-books-zh_CN)
@@ -14,22 +14,22 @@
 
 
 ###API
-	- [极客学院Wiki](http://wiki.jikexueyuan.com)
-	- [runoob.com-](http://www.runoob.com/)
-	- [开源中国在线API文档合集](http://tool.oschina.net/apidocs)
-	- [devdocs-英文综合API网站](http://devdocs.io/) 
-	- [验证api](http://niceue.com/validator/demo/index.php)
-	- [underscore 中文手册](http://www.css88.com/doc/underscore/)
-	- [underscore源码分析](http://www.html-js.com/article/Underscorejs-source-code-analysis-of-underscorejs-source-code-analysis 3031)
-	- [underscore源码分析-亚里士朱德的博客](http://yalishizhude.github.io/tags/underscore/)
-	- [underscrejs en api](http://underscorejs.org/)
-	- [lodash - underscore的代替品](https://lodash.com/)
-	- [ext4api](http://extjs-doc-cn.github.io/ext4api/)
-	- [backbone 中文手册](http://www.csser.com/tools/backbone/backbone.js.html)
-	- [qwrap手册](http://dev.qwrap.com/resource/js/_docs/_youa/#/qw/base/loadJs_.htm)
-	- [缓动函数](http://easings.net/zh-cn)
-	- [ai-to-svg](http://www.zamzar.com/convert/ai-to-svg)
-	- [localStorage 库](https://github.com/machao/localStorage)
+- [极客学院Wiki](http://wiki.jikexueyuan.com)
+- [runoob.com-](http://www.runoob.com/)
+- [开源中国在线API文档合集](http://tool.oschina.net/apidocs)
+- [devdocs-英文综合API网站](http://devdocs.io/) 
+- [验证api](http://niceue.com/validator/demo/index.php)
+- [underscore 中文手册](http://www.css88.com/doc/underscore/)
+- [underscore源码分析](http://www.html-js.com/article/Underscorejs-source-code-analysis-of-underscorejs-source-code-analysis 3031)
+- [underscore源码分析-亚里士朱德的博客](http://yalishizhude.github.io/tags/underscore/)
+- [underscrejs en api](http://underscorejs.org/)
+- [lodash - underscore的代替品](https://lodash.com/)
+- [ext4api](http://extjs-doc-cn.github.io/ext4api/)
+- [backbone 中文手册](http://www.csser.com/tools/backbone/backbone.js.html)
+- [qwrap手册](http://dev.qwrap.com/resource/js/_docs/_youa/#/qw/base/loadJs_.htm)
+- [缓动函数](http://easings.net/zh-cn)
+- [ai-to-svg](http://www.zamzar.com/convert/ai-to-svg)
+- [localStorage 库](https://github.com/machao/localStorage)
 
 
 
@@ -37,9 +37,9 @@
 
 
 ###综合搜索
-	- [javascripting](http://www.javascripting.com/)
-	- [各种流行库搜索](http://microjs.com/)
-	
+- [javascripting](http://www.javascripting.com/)
+- [各种流行库搜索](http://microjs.com/)
+
 	
 	
 	
@@ -51,13 +51,13 @@
 	
 	
 ###开发中心
-	- [mozilla js参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
-	- [chrome开发中心（chrome的内核已转向blink）](http://developer.chrome.com/extensions/api_index.html)
-	- [safari开发中心](https://developer.apple.com/library/safari/navigation)
-	- [microsoft js参考](http://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
-	- [js秘密花园](http://sanshi.me/articles/JavaScript-Garden-CN/html/index.html)
-	- [js秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)
-	- [w3help,综合Bug集合网站](http://www.w3help.org/) 
+- [mozilla js参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
+- [chrome开发中心（chrome的内核已转向blink）](http://developer.chrome.com/extensions/api_index.html)
+- [safari开发中心](https://developer.apple.com/library/safari/navigation)
+- [microsoft js参考](http://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
+- [js秘密花园](http://sanshi.me/articles/JavaScript-Garden-CN/html/index.html)
+- [js秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)
+- [w3help,综合Bug集合网站](http://www.w3help.org/) 
 
 
 
@@ -66,25 +66,25 @@
 
 
 ###兼容性
-	- [esma 兼容列表](http://kangax.github.io/compat-table/es6/)
-	- [W3C CSS验证服务](http://jigsaw.w3.org/css-validator/validator.html.zh-cn)
-	- [caniuse](http://caniuse.com/#index )
-	- [csscreator](http://csscreator.com/properties)
-	- [microsoft](http://msdn.microsoft.com/zh-cn/library/cc351024(v=vs.85).aspx)
-	- [在线测兼容-移动端](http://www.responsinator.com/)
-	- [emulators](https://www.manymo.com/emulators)
+- [esma 兼容列表](http://kangax.github.io/compat-table/es6/)
+- [W3C CSS验证服务](http://jigsaw.w3.org/css-validator/validator.html.zh-cn)
+- [caniuse](http://caniuse.com/#index )
+- [csscreator](http://csscreator.com/properties)
+- [microsoft](http://msdn.microsoft.com/zh-cn/library/cc351024(v=vs.85).aspx)
+- [在线测兼容-移动端](http://www.responsinator.com/)
+- [emulators](https://www.manymo.com/emulators)
 
 
 
 
 ###正则
-	- [JS正则表达式元字符](http://segmentfault.com/a/1190000002471140)
-	- [正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
-	- [MDN-正则表达式](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions)
-	- [ruanyifeng - RegExp对象](http://javascript.ruanyifeng.com/stdlib/regexp.html)
-	- [小胡子哥 - 进阶正则表达式](http://div.io/topic/764?page=1)
-	- [is.js](https://github.com/Cedriking/is.js/blob/master/is.js)
-	- [正则在线测试](http://regexper.com/)
+- [JS正则表达式元字符](http://segmentfault.com/a/1190000002471140)
+- [正则表达式30分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
+- [MDN-正则表达式](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [ruanyifeng - RegExp对象](http://javascript.ruanyifeng.com/stdlib/regexp.html)
+- [小胡子哥 - 进阶正则表达式](http://div.io/topic/764?page=1)
+- [is.js](https://github.com/Cedriking/is.js/blob/master/is.js)
+- [正则在线测试](http://regexper.com/)
 	
 	
 
@@ -92,27 +92,27 @@
 	
 ###自动化
 ####Gulp 
-	- [Gulp官网](http://gulpjs.com/)
-	- [Gulp中文网](http://www.gulpjs.com.cn/)
-	- [gulp资料收集](https://github.com/Platform-CUF/use-gulp)
-	- [Gulp：任务自动管理工具 - ruanyifeng](http://javascript.ruanyifeng.com/tool/gulp.html)
-	- [Gulp插件](http://gulpjs.com/plugins/)
-	- [Gulp不完全入门教程](http://www.ido321.com/1622.html)
-	- [为什么使用gulp?](https://github.com/hjzheng/CUF_meeting_knowledge_share/issues/33)
-	- [Gulp安装及配合组件构建前端开发一体化](http://www.dbpoo.com/getting-started-with-gulp/)
-	- [Gulp 入门指南](https://github.com/nimojs/gulp-book)
-	- [Gulp 入门指南 - nimojs](https://github.com/nimojs/blog/issues/19)
-	- [Gulp入门教程](http://markpop.github.io/2014/09/17/Gulp入门教程/)
-	- [Gulp in Action](http://www.imooc.com/video/5692)
-	- [Gulp开发教程（翻译）](http://www.w3ctech.com/topic/134)
-	- [前端构建工具gulpjs的使用介绍及技巧](http://www.cnblogs.com/2050/p/4198792.html)
+- [Gulp官网](http://gulpjs.com/)
+- [Gulp中文网](http://www.gulpjs.com.cn/)
+- [gulp资料收集](https://github.com/Platform-CUF/use-gulp)
+- [Gulp：任务自动管理工具 - ruanyifeng](http://javascript.ruanyifeng.com/tool/gulp.html)
+- [Gulp插件](http://gulpjs.com/plugins/)
+- [Gulp不完全入门教程](http://www.ido321.com/1622.html)
+- [为什么使用gulp?](https://github.com/hjzheng/CUF_meeting_knowledge_share/issues/33)
+- [Gulp安装及配合组件构建前端开发一体化](http://www.dbpoo.com/getting-started-with-gulp/)
+- [Gulp 入门指南](https://github.com/nimojs/gulp-book)
+- [Gulp 入门指南 - nimojs](https://github.com/nimojs/blog/issues/19)
+- [Gulp入门教程](http://markpop.github.io/2014/09/17/Gulp入门教程/)
+- [Gulp in Action](http://www.imooc.com/video/5692)
+- [Gulp开发教程（翻译）](http://www.w3ctech.com/topic/134)
+- [前端构建工具gulpjs的使用介绍及技巧](http://www.cnblogs.com/2050/p/4198792.html)
 
 ####Grunt
-	- [gruntjs](http://gruntjs.com/)
-	- [Grunt中文网](http://www.gruntjs.net/)
+- [gruntjs](http://gruntjs.com/)
+- [Grunt中文网](http://www.gruntjs.net/)
 ####Fis
-	- [fis 官网](http://fex-team.github.io/fis-site/index.html)
-	- [fis](http://fis.baidu.com)
+- [fis 官网](http://fex-team.github.io/fis-site/index.html)
+- [fis](http://fis.baidu.com)
 
 
 
@@ -120,12 +120,12 @@
 
 
 ###在线演示
-	- [js 在线编辑 - runjs](http://runjs.cn)
-	- [js 在线编辑 - jsbin](http://jsbin.com)
-	- [js 在线编辑 - codepen](http://codepen.io)
-	- [js 在线编辑 - jsfiddle](http://jsfiddle.net)
-	- [js 在线编辑 - hcharts](http://code.hcharts.cn)
-	- [js 在线编辑 - jsdm](http://jsdm.com)
+- [js 在线编辑 - runjs](http://runjs.cn)
+- [js 在线编辑 - jsbin](http://jsbin.com)
+- [js 在线编辑 - codepen](http://codepen.io)
+- [js 在线编辑 - jsfiddle](http://jsfiddle.net)
+- [js 在线编辑 - hcharts](http://code.hcharts.cn)
+- [js 在线编辑 - jsdm](http://jsdm.com)
 
 
 
@@ -133,14 +133,14 @@
 #类库
 	
 ###Ecmascript
-	- [Understanding ECMAScript 6 - Nicholas C. Zakas](https://leanpub.com/understandinges6/read)
-	- [exploring-es6](https://leanpub.com/exploring-es6/read)
-	- [exploring-es6翻译](https://github.com/es6-org/exploring-es6)
-	- [exploring-es6翻译后预览](http://es6-org.github.io/exploring-es6/)
-	- [阮一峰 es6](http://es6.ruanyifeng.com/)
-	- [阮一峰 Javascript](http://javascript.ruanyifeng.com/)
-	- [ECMA-262，第 5 版](http://yanhaijing.com/es5/)
-	- [es5](http://es5.github.io/)
+- [Understanding ECMAScript 6 - Nicholas C. Zakas](https://leanpub.com/understandinges6/read)
+- [exploring-es6](https://leanpub.com/exploring-es6/read)
+- [exploring-es6翻译](https://github.com/es6-org/exploring-es6)
+- [exploring-es6翻译后预览](http://es6-org.github.io/exploring-es6/)
+- [阮一峰 es6](http://es6.ruanyifeng.com/)
+- [阮一峰 Javascript](http://javascript.ruanyifeng.com/)
+- [ECMA-262，第 5 版](http://yanhaijing.com/es5/)
+- [es5](http://es5.github.io/)
 	
 	
 ###Angularjs
