@@ -270,7 +270,7 @@
 - [LESS中国官网](http://www.lesscss.net)	
 - [sass入门](http://www.w3cplus.com/blog/tags/302.html)
 - [koala是一个前端预处理器语言图形编译工具](http://koala-app.com/index-zh.html)	
-	
+- [css88 Sass (3.4.21) 中文文档](http://www.css88.com/doc/sass)	
 	
 	
 ###Markdown	
