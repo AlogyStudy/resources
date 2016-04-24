@@ -24,6 +24,8 @@
 - [常用算法](http://www.cnblogs.com/tuyile006/category/95974.html)
 - [牛客网-算法视频](http://www.nowcoder.com/courses/6)
 - [直观感受几种常用排序算法](http://www.cnblogs.com/wangfupeng1988/archive/2011/12/26/2302216.html)
+- [visualgo算法视频](http://visualgo.net)
+- [算法视频](http://watchmen.cn/video/algorithm)
 
 #NodeJS
 - [nodejs  api 中文文档](http://www.cnblogs.com/liyufeng2013/p/4072098.html)

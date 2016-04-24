@@ -8,15 +8,12 @@
 - [svg 地图](http://jvectormap.com/)
 
 ###框架类
-- [bootcss](http://v3.bootcss.com/)
-- [MetroUICSS](http://www.w3cplus.com/MetroUICSS/)
-- [semantic](http://semantic-ui.com/)
-- [Buttons](http://alexwolfe.github.io/Buttons/)
+- [bootcss](http://v3.bootcss.com)
+- [MetroUICSS](http://www.w3cplus.com/MetroUICSS)
+- [semantic](http://semantic-ui.com)
 - [kitecss](http://hiloki.github.io/kitecss/)
 - [pintuer](http://www.pintuer.com/)
 - [amazeui](http://amazeui.org/)
-- [worldhello](http://www.worldhello.net/gotgithub/index.html)
-- [linuxtoy](http://igit.linuxtoy.org/contents.html)
-- [gitmagic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/)
-- [rogerdudler](http://rogerdudler.github.io/git-guide/index.zh.html)
-- [gitref](http://gitref.justjavac.com/)
+
+
+

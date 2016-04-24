@@ -110,9 +110,14 @@
 - [js 在线编辑 - jsdm](http://jsdm.com)
 
 
-###git
+###Git
 - [book](http://git-scm.com/book/zh)
 - [git教学](http://gogojimmy.net/2012/01/17/how-to-use-git-1-git-basic)
+- [rogerdudler](http://rogerdudler.github.io/git-guide/index.zh.html)
+- [gitmagic](http://www-cs-students.stanford.edu/~blynn/gitmagic/intl/zh_cn/)
+- [linuxtoy](http://igit.linuxtoy.org/contents.html)
+- [worldhello](http://www.worldhello.net/gotgithub/index.html)
+- [gitref](http://gitref.justjavac.com/)
 
 
 #类库
