@@ -4,7 +4,7 @@
 ###PHP
 - [ PHP入门圣经（上）](http://phpbook.phpxy.com/33183)
 - [ThinkPHP3.2开发手册](http://document.thinkphp.cn/manual_3_2.html#define_model)
-- [http://www.phpddt.com](http://www.phpddt.com)
+- [PHP点点通](http://www.phpddt.com)
 - [php官网手册](http://php.net/manual/zh/index.php)
 - [phpstudy](http://www.phpstudy.net/php)
 	

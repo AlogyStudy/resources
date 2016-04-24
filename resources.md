@@ -10,28 +10,30 @@
 - [免费的编程中文书籍索引](https://github.com/justjavac/free-programming-books-zh_CN)
 - [重新介绍 JavaScript（JS 教程）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
 - [JS函数式编程指南](http://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch1.html)
+
+
 ###API
 - [极客学院Wiki](http://wiki.jikexueyuan.com)
 - [runoob.com](http://www.runoob.com)
+- [API Documents](http://docs.w3cub.com)
+- [程序员手册大全](http://manual.51yip.com/angularjs)
 - [开源中国在线API文档合集](http://tool.oschina.net/apidocs)
 - [devdocs-英文综合API网站](http://devdocs.io/) 
-- [验证api](http://niceue.com/validator/demo/index.php)
+- [overApi](http://overapi.com)
+- [易百教程](http://www.yiibai.com)
+- [自强学堂手册](http://www.ziqiangxuetang.com)
+- [nice Validator-jQuery智能表单验证](http://niceue.com/validator/demo/index.php)
 - [underscore 中文手册](http://www.css88.com/doc/underscore/)
 - [underscore源码分析](http://www.html-js.com/article/Underscorejs-source-code-analysis-of-underscorejs-source-code-analysis 3031)
 - [underscore源码分析-亚里士朱德的博客](http://yalishizhude.github.io/tags/underscore/)
-- [underscrejs en api](http://underscorejs.org/)
-- [lodash - underscore的代替品](https://lodash.com/)
-- [ext4api](http://extjs-doc-cn.github.io/ext4api/)
-- [backbone 中文手册](http://www.csser.com/tools/backbone/backbone.js.html)
+- [lodash - underscore的代替品](https://lodash.com)
+- [ext4 Api](http://extjs-doc-cn.github.io/ext4api)
 - [qwrap手册](http://dev.qwrap.com/resource/js/_docs/_youa/#/qw/base/loadJs_.htm)
 - [缓动函数](http://easings.net/zh-cn)
-- [ai-to-svg](http://www.zamzar.com/convert/ai-to-svg)
-- [localStorage 库](https://github.com/machao/localStorage)
-- [overApi](http://overapi.com)
 - [codecloud手册](http://w3cschool.codecloud.net)
 - [阮一峰 -javascript](http://javascript.ruanyifeng.com/stdlib/object.html)
 - [phpstudy](http://www.phpstudy.net/php/function.php)
-
+- [开发技术文档汇总](http://www.cnblogs.com/pigtail/p/3467188.html)
 
 ###综合搜索
 - [javascripting](http://www.javascripting.com)
@@ -39,16 +41,22 @@
 - [div.io框架](http://div.io/digg)
 - [前端资源库](https://www.awesomes.cn)	
 - [bootcdn](http://www.bootcdn.cn)
+
+
 ###开发中心
 - [mozilla js参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
 - [chrome开发中心（chrome的内核已转向blink）](http://developer.chrome.com/extensions/api_index.html)
 - [microsoft JavaScript 语言参考](https://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
 - [safari开发中心](https://developer.apple.com/library/safari/navigation)
 - [microsoft js参考](http://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
-- [js秘密花园](http://sanshi.me/articles/JavaScript-Garden-CN/html/index.html)
-- [js秘密花园](http://bonsaiden.github.io/JavaScript-Garden/zh/)
+- [opera开发者中心](https://dev.opera.com)
+- [js秘密花园](http://www.zixuephp.com/webshouce/javascript/)
 - [w3help,综合Bug集合网站](http://www.w3help.org/) 
 - [JavaScript核心](http://weizhifeng.net/javascript-the-core.html)
+- [github](https://github.com)
+- [npm](https://www.npmjs.com)
+- [segmentfault](https://segmentfault.com)
+- [stackoverflow](http://stackoverflow.com)
 
 
 ###兼容性
@@ -138,6 +146,9 @@
 	
 ###Angularjs
 - [Angular.js 的一些学习资源](https://github.com/dolymood/AngularLearning)
+- [AngularJS 文档指南-中文](http://docs.ngnice.com/guide)
+- [AngularJS 手册](http://www.ziqiangxuetang.com/angularjs/angularjs-reference.html)
+- [AngularJS API Docs](http://docs.angularjs.cn/api)
 - [angularjs中文社区](http://angularjs.cn/)
 - [Angularjs源码学习](http://www.cnblogs.com/xuwenmin888/p/3739096.html)
 - [Angularjs源码学习](http://www.ifeenan.com/?c=AngularJS)
@@ -208,7 +219,7 @@
 
 
 ###Backbone
-
+- [Backbone](http://123.56.156.13/api/backbone)
 
 
 
