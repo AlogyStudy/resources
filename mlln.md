@@ -1,8 +1,12 @@
 
-
 #WEB
 
 ###PHP
+- [ PHP入门圣经（上）](http://phpbook.phpxy.com/33183)
+- [ThinkPHP3.2开发手册](http://document.thinkphp.cn/manual_3_2.html#define_model)
+- [http://www.phpddt.com](http://www.phpddt.com)
+- [php官网手册](http://php.net/manual/zh/index.php)
+- [phpstudy](http://www.phpstudy.net/php)
 	
 ###Apache
 
@@ -10,6 +14,7 @@
 
 ###HTTP
 - [HTTP API 设计指南](http://segmentfault.com/bookmark/1230000002521721)
+
 ###算法
 - [数据结构与算法 JavaScript 描述. 章节练习](https://github.com/Ralph-Wang/algorithm.in.js)
 - [常见排序算法（JS版）](https://github.com/twobin/twobinSort)
@@ -46,22 +51,19 @@
 - [移动端前端开发知识库](https://github.com/AlloyTeam/Mars)
 - [移动前端的一些坑和解决方法（外观表现）](http://caibaojian.com/mobile-web-bug.html)
 - [【原】移动web资源整理](http://www.cnblogs.com/PeunZhang/p/3407453.html)
-- [zepto 1.0 中文手册](http://mweb.baidu.com/zeptoapi/)
-- [zepto 1.0 中文手册](http://www.html-5.cn/Manual/Zepto/)
 - [zepto 1.1.2](http://www.css88.com/doc/zeptojs_api/)
 - [zepto 中文注释](http://www.cnblogs.com/sky000/archive/2013/03/29/2988952.html)
 - [jqmobile 手册](http://app-framework-software.intel.com/api.php)
-- [移动浏览器开发集合](https://github.com/maxzhang/maxzhang.github.com/issues)
 - [移动开发大杂烩](https://github.com/hoosin/mobile-web-favorites)
 - [微信webview中的一些问题](http://lin-chao.github.io/2014/11/14/微信webview中的一些问题/)
-- [特色的HTML框架可以创建精美的iOS应用](http://framework7.taobao.org/)
-- [淘宝SUI](http://m.sui.taobao.org/)
+- [Framework7 ](http://framework7.taobao.org)
+- [淘宝SUI](http://m.sui.taobao.org)
 - [fastclick](https://github.com/ftlabs/fastclick)
 - [no-click-delay](https://github.com/mmastrac/jquery-noclickdelay)
 - [HTML 5接口全方位测试总结文](http://mp.weixin.qq.com/s?__biz=MjM5MTk1NjI0MA==&mid=207632461&idx=1&sn=a8b00391f244c3bcbe1c2e9f22c7b107#rd)
 - [[WebApp]定宽网页设计下，固定宽度布局开发WebApp并实现多终端下WebApp布局自适应](http://www.cnblogs.com/plums/archive/2013/01/10/WebApp-fixed-width-layout-of-multi-terminal-adapter-since.html)
-- [判断微信客户端的那些坑](http://loo2k.com/blog/detecting-wechat-client/)
-- [移动端跨平台开发的各种技术](http://fex.baidu.com/blog/2015/05/cross-mobile/)
+- [判断微信客户端的那些坑](http://loo2k.com/blog/detecting-wechat-client)
+- [移动端跨平台开发的各种技术](http://fex.baidu.com/blog/2015/05/cross-mobile)
 - [JiaThis 分享到微信代码](http://www.jiathis.com/help/html/weixin-share-code)
 	
 
