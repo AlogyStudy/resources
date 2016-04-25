@@ -8,20 +8,20 @@
 - [免费的编程中文书籍索引](https://github.com/justjavac/free-programming-books-zh_CN)
 - [前端书籍](https://github.com/dypsilon/frontend-dev-bookmarks)
 - [免费的编程中文书籍索引](https://github.com/justjavac/free-programming-books-zh_CN)
-- [重新介绍 JavaScript（JS 教程）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
+- [重新介绍 JavaScrip](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
 - [JS函数式编程指南](http://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch1.html)
 
 
 ###API
 - [极客学院Wiki](http://wiki.jikexueyuan.com)
-- [runoob.com](http://www.runoob.com)
+- [runoob](http://www.runoob.com)
 - [API Documents](http://docs.w3cub.com)
 - [程序员手册大全](http://manual.51yip.com/angularjs)
-- [开源中国在线API文档合集](http://tool.oschina.net/apidocs)
-- [devdocs-英文综合API网站](http://devdocs.io/) 
+- [开源中国在线API文档](http://tool.oschina.net/apidocs)
+- [devdocs-英文综合API](http://devdocs.io/) 
 - [overApi](http://overapi.com)
 - [易百教程](http://www.yiibai.com)
-- [自强学堂手册](http://www.ziqiangxuetang.com)
+- [自强学堂](http://www.ziqiangxuetang.com)
 - [nice Validator-jQuery智能表单验证](http://niceue.com/validator/demo/index.php)
 - [underscore 中文手册](http://www.css88.com/doc/underscore/)
 - [underscore源码分析](http://www.html-js.com/article/Underscorejs-source-code-analysis-of-underscorejs-source-code-analysis 3031)
@@ -31,27 +31,29 @@
 - [qwrap手册](http://dev.qwrap.com/resource/js/_docs/_youa/#/qw/base/loadJs_.htm)
 - [缓动函数](http://easings.net/zh-cn)
 - [codecloud手册](http://w3cschool.codecloud.net)
-- [阮一峰 -javascript](http://javascript.ruanyifeng.com/stdlib/object.html)
+- [阮一峰 -javascript](http://javascript.ruanyifeng.com)
 - [phpstudy](http://www.phpstudy.net/php/function.php)
 - [开发技术文档汇总](http://www.cnblogs.com/pigtail/p/3467188.html)
+- [jq-school](http://www.jq-school.com/api/index.html)
+
 
 ###综合搜索
 - [javascripting](http://www.javascripting.com)
 - [各种流行库搜索](http://microjs.com)
-- [div.io框架](http://div.io/digg)
+- [div.io](http://div.io/digg)
 - [前端资源库](https://www.awesomes.cn)	
 - [bootcdn](http://www.bootcdn.cn)
-
+- [百度静态资源公共库](http://cdn.code.baidu.com)
 
 ###开发中心
-- [mozilla js参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
-- [chrome开发中心（chrome的内核已转向blink）](http://developer.chrome.com/extensions/api_index.html)
-- [microsoft JavaScript 语言参考](https://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
+- [mozilla](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
+- [chrome开发中心](http://developer.chrome.com/extensions/api_index.html)
+- [microsoft](https://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
 - [safari开发中心](https://developer.apple.com/library/safari/navigation)
 - [microsoft js参考](http://msdn.microsoft.com/zh-cn/library/d1et7k7c(v=vs.94).aspx)
 - [opera开发者中心](https://dev.opera.com)
 - [js秘密花园](http://www.zixuephp.com/webshouce/javascript/)
-- [w3help,综合Bug集合网站](http://www.w3help.org/) 
+- [w3help](http://www.w3help.org/) 
 - [JavaScript核心](http://weizhifeng.net/javascript-the-core.html)
 - [github](https://github.com)
 - [npm](https://www.npmjs.com)
@@ -67,7 +69,7 @@
 - [microsoft](http://msdn.microsoft.com/zh-cn/library/cc351024(v=vs.85).aspx)
 - [在线测兼容-移动端](http://www.responsinator.com/)
 - [emulators](https://www.manymo.com/emulators)
-- [Modernizr: the feature detection library for HTML5/CSS3](https://modernizr.com)
+- [Modernizr](https://modernizr.com)
 - [NEC : 更好的CSS样式解决方案](http://nec.netease.com)
 
 ###正则
@@ -111,12 +113,12 @@
 
 
 ###在线演示
-- [js 在线编辑 - runjs](http://runjs.cn)
-- [js 在线编辑 - jsbin](http://jsbin.com)
-- [js 在线编辑 - codepen](http://codepen.io)
-- [js 在线编辑 - jsfiddle](http://jsfiddle.net)
-- [js 在线编辑 - hcharts](http://code.hcharts.cn)
-- [js 在线编辑 - jsdm](http://jsdm.com)
+- [runjs](http://runjs.cn)
+- [jsbin](http://jsbin.com)
+- [codepen](http://codepen.io)
+- [jsfiddle](http://jsfiddle.net)
+- [hcharts](http://code.hcharts.cn)
+- [jsdm](http://jsdm.com)
 
 
 ###Git
@@ -143,7 +145,7 @@
 - [w3c 中文版](https://www.w3.org/html/ig/zh/wiki/ES5)
 - [es5](http://es5.github.io)
 - [颜海镜 es5](http://yanhaijing.com/es5/#about)
-	
+- [ECMA-262，第 5 版-IBM](http://www.ibm.com/developerworks/cn/web/wa-ecma262/index.html)	
 	
 ###Angularjs
 - [Angular.js 的一些学习资源](https://github.com/dolymood/AngularLearning)
@@ -217,7 +219,7 @@
 - [jquery 源码查找](http://james.padolsey.com/jquery)
 - [jqueryBugs](https://bugs.jquery.com)
 - [jQuery源码分析系列 - 【Aaron】 - 博客园](http://www.cnblogs.com/aaronjs/p/3279314.html)
-
+- [不需要JQUERY&JS](http://youmightnotneedjquery.com)
 
 ###Backbone
 - [Backbone](http://123.56.156.13/api/backbone)
@@ -241,7 +243,7 @@
 - [lofter](http://datavisual.lofter.com/post/40cf3a_188e535)
 - [iteye](http://alanland.iteye.com/blog/1878595)
 - [ruanyifeng](http://javascript.ruanyifeng.com/library/d3.html)
-- [D3.js - Data-Driven Documents](https://d3js.org)
+- [D3.js](https://d3js.org)
 
 
 
@@ -286,7 +288,7 @@
 - [less](http://less.bootcss.com/)
 - [LESS中国官网](http://www.lesscss.net)	
 - [sass入门](http://www.w3cplus.com/blog/tags/302.html)
-- [koala是一个前端预处理器语言图形编译工具](http://koala-app.com/index-zh.html)	
+- [koala](http://koala-app.com/index-zh.html)	
 - [css88 Sass (3.4.21) 中文文档](http://www.css88.com/doc/sass)	
 	
 	
@@ -395,7 +397,7 @@
 - [雅虎UI - CSS UI](http://developer.yahoo.com/yui/grids)
 - [GitHub 排名](http://githuber.cn/rank)	
 - [Web Developer技能树](http://skill.phodal.com)
-
+- [提交代码到validator.w3.org 验证](http://validator.w3.org)
 
 ####Libraries
 - [JX-JavaScript扩展工具套件](http://alloyteam.github.io/JX/#home)

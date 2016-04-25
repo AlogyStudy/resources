@@ -42,8 +42,16 @@
 - [nodejs入门](http://www.nodebeginner.org/index-zh-cn.html)
 - [七天学会nodejs](http://nqdeng.github.io/7-days-nodejs)
 - [nodejs中文社区](http://cnodejs.org)
+- [Express 中文文档](http://expressjs.jser.us)
+- [NPM](https://www.npmjs.org)
+- [CNPM-淘宝](http://npm.taobao.org)
+- [CNPM](http://cnpmjs.org)
 
 
+#MongoDB
+- [MongoDB](https://www.mongodb.com)
+- [Mongoose](http://mongoosejs.com)
+- [Mongolab(500MB免费数据库)](https://mongolab.com)
 
 
 #Moile App
