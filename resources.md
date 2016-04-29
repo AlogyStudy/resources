@@ -272,6 +272,7 @@
 - [css3动画帧数计算器](http://tid.tenpay.com/labs/css3_keyframes_calculator.html)	
 - [Effeckt.css](http://bouncejs.com)
 - [Magic Animations CSS3](http://minimamente.com/example/magic_animations)	
+- [CSS3 . Info](http://www.css3.info)	
 	
 	
 ###HTML5
@@ -398,6 +399,8 @@
 - [GitHub 排名](http://githuber.cn/rank)	
 - [Web Developer技能树](http://skill.phodal.com)
 - [提交代码到validator.w3.org 验证](http://validator.w3.org)
+- [SDK开放平台](https://www.sdk.cn/services)
+- [开发者导航](https://www.sdk.cn/nav/index)
 
 ####Libraries
 - [JX-JavaScript扩展工具套件](http://alloyteam.github.io/JX/#home)
