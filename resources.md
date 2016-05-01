@@ -35,7 +35,7 @@
 - [phpstudy](http://www.phpstudy.net/php/function.php)
 - [开发技术文档汇总](http://www.cnblogs.com/pigtail/p/3467188.html)
 - [jq-school](http://www.jq-school.com/api/index.html)
-
+- [javascripture - js_API](http://www.javascripture.com)
 
 ###综合搜索
 - [javascripting](http://www.javascripting.com)
@@ -44,6 +44,7 @@
 - [前端资源库](https://www.awesomes.cn)	
 - [bootcdn](http://www.bootcdn.cn)
 - [百度静态资源公共库](http://cdn.code.baidu.com)
+- [百度-CDN公共库](http://developer.baidu.com/wiki/?title=docs/cplat/libs)
 
 ###开发中心
 - [mozilla](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
@@ -145,7 +146,9 @@
 - [w3c 中文版](https://www.w3.org/html/ig/zh/wiki/ES5)
 - [es5](http://es5.github.io)
 - [颜海镜 es5](http://yanhaijing.com/es5/#about)
-- [ECMA-262，第 5 版-IBM](http://www.ibm.com/developerworks/cn/web/wa-ecma262/index.html)	
+- [ECMA-262，第 5 版-IBM](http://www.ibm.com/developerworks/cn/web/wa-ecma262/index.html)
+- [ECMAScript 2015 Language](http://www.ecma-international.org/ecma-262/6.0)	
+- [babeljs](http://babeljs.io)	
 	
 ###Angularjs
 - [Angular.js 的一些学习资源](https://github.com/dolymood/AngularLearning)

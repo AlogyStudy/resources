@@ -58,7 +58,8 @@
 
 
 #Node.js 
-- [nodejs  api 中文文档](http://www.cnblogs.com/liyufeng2013/p/4072098.html)
+- [node.js api 中文版](http://nodeapi.ucdok.com/#/api)
+- [nodejs api 中文文档](http://www.cnblogs.com/liyufeng2013/p/4072098.html)
 - [node.js api 中文](http://www.lxway.com/438648.html)
 - [nodejs相关](https://cnodejs.org/topic/528c9a38d2b3893f2abb6eeb)
 - [Node.js v4.2.4 手册 & 文档](http://nodeapi.ucdok.com/api/all.html)
