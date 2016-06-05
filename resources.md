@@ -206,7 +206,9 @@
 - [Desmos图形计算器](https://www.desmos.com)
 - [（动画）Velocity.js](http://julian.com/research/velocity/index.html)
 - [JS 2D渲染引擎](https://github.com/pixijs/pixi.js)
-- [](http://www.w3cmark.com/2016/webgl.html)
+- [webgl](http://www.w3cmark.com/2016/webgl.html)
+- [canvas](http://bucephalus.org/text/CanvasHandbook/CanvasHandbook.html)
+- [canvas-mozilla](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial)
 
 ###threejs
 - [three官网](http://threejs.org)
