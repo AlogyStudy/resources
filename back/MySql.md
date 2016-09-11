@@ -1,13 +1,20 @@
+
 # 数据库概念
+
 一台服务器下有多个库，一个库下有1到多张表，表有多行多列的数据。
 postgresql也是一个开源数据库，而且sql标准执行方面，比mysql要严格。
 
 表格  --> 档案袋 --> 人管理(MySql)
 
+
 # MySql 安装
+
 MySql5.1 & MySql5.5 稳定版
 
+
+
 # 基本入门语句
+
 1. 链接数据库
         mysql -uusername -ppassworld
         链接上服务器之后面对的是库。 库有一个或多个.
@@ -168,7 +175,7 @@ where 后面的是表达式，表达式为true，则此行被取出
 
 > 数值型
 
-    整型
+**整型**    
   	tinyint
     smallint
     mediuint
@@ -183,7 +190,6 @@ where 后面的是表达式，表达式为true，则此行被取出
 tinyint 1字节
 
 1个字节 8个位
-
 
 # 模拟  -- 每个位，只能存储0,1
 [][][][][][][][]
@@ -255,7 +261,7 @@ insert into class (sname, snum) values ('吕布', 1);
 	     
 
 	     
-> 小数(浮点型/定点型)
+**小数(浮点型/定点型)**
 
 	float(D, M)
 	decimal(D, M)
@@ -276,4 +282,305 @@ float 能存储 10^38 。小数点右边可以精确到： 10^38分之一
 定点(decimal)是把整数部分和小数部分，分开存储的。比 float精确. 
 float 有时候会损失精度
 
+
+> 字符串型
+
+char, varchar, text, blod
+
+char(6) 定长字符串。
+例如， 姓名 char(6)
+查找行记录时，如果都是定长，完全可以通过行数与行的长度计算出来，文件指针的偏移量.
+对于定长N，不论是否够不够指定长度，实际都占据N个长度。如果不够N个长度，用空格在末尾补至N个长度。
+利用率中，char(),可能达到100%;
+char型，如果不够M个字符，内部用空格补齐，取出时再把右侧空格删除掉。（注意：如果右侧本身有空格，将会丢失）
+
+
+varchar(100) 变长类型。 能够存储0-100个字符。
+每个字符都要读取前缀，就算是空字符串，都是需要存储空间。
+varchar(N),不用空格补齐，但是列内容前，有1-2个字节来标志该列的内容长度。
+利用率中，varchar() 不可能达到100%;
+
+
+注意：char(M),varchar(M) 限制的是字符，不是字节。
+即：char(2) charset utf-8; 能存储 2个utf8 的字符.
+ 
+错误认识：既然是字符，6个utf8字符串，18个字节。 
+并不是18个字节。能够存储6个字符，就是在utf8中能够存储6个字节
+
+
+text 文本类型，可以存储比较大的文本段，搜索速度稍慢。
+text 不用加默认值 (加了也没有用)
+
+```mysql
+create table test ( article text );
+```
+
+
+blod , 二进制类型，用来存储图像，音频等二进制信息。
+意义：二进制， 0-255 每个字节都有可能出现。
+blod类型，在于防止因为字符集的问题，导致信息丢失。 
+比如：一张图片中有 0xFF 字节， 这个在ascii字符集中，在入库的时候被过滤了。 因为当再次取出的时候，被损坏了。
+如果是二进制，那么给你什么东西，你就存储什么东西，并不需要考虑字符集问题。
+ 
+
+> 日期/时间类型
+
+date, time, datetime, year
+
+date 日期， date 类型 能存储哪年到哪年 ? 
+1000-01-01 ~ 9999-12-31
+
+time 时间，time 时间类型 
+专款专用，专列专用
+
+datetime 日期时间， 占8个字节
+
+year 年类型  只占1字节，最多能够存储256中变化。
+范围：1901 - 2155 ，还有一种 是：0000
+
+```mysql
+create table test5 (thing varchar(20) not null default '', ya year  not null default '0000') engine myisam charset utf8;
+```
+
+
+# 网站建表及优化意识
+
+** 社交平台 **
+
+主键 id, 用户名, 性别, 体重KG, 生日, 收入, 上次登陆时间, 个人简介     
+
+```mysql
+create table user (
+	u_id int unsinged PRI,
+	user varchar(20) not null default '',
+	sex char(1) not null default '',
+	wieght tinyint unsinged not null,
+	birth date not null default '00',
+	salary decimal(8,2) not null default 0.00,
+	lastlogin datetime not null default '0000-00-00 00:00:00 ',
+	intro varchar(200) not null default ''
+)
+```
+
+
+** 优化 **
+
+分析：这张表除了username intro 列之外，每一列都是定长的。不妨让其所有列都定长，可以极大提高查询速度。
+
+```mysql
+create table user (
+	u_id int unsinged PRI,
+	username char(20) not null default '',
+	sex char(1) not null default '',
+	wieght tinyint unsinged not null,
+	birth date not null default '00',
+	salary decimal(8,2) not null default 0.00,
+	lastlogin int unsigned not null default '0000-00-00 00:00:00 '
+)
+
+create table inrto (
+	i_id int unsinged PRI,
+	username char(20) not null default '',
+	intro varchar(1500) not null default ''
+);
+``` 
+
+username char(20) 是会造成存储空间的浪费，但是提高了速度，值得。
+intro char(1500) 却浪费的太多了，另一方面，人的简介，一旦注册完，修改的频率也并不高。可以把intro列单独拿出来，另放一张表里。
+修改完之后，主表全部都是定长，容易被人查看，修改，速度快。
+lastlogin 定义成 datetime计算的时候麻烦，一般使用的是，时间戳。
+
+
+总结：
+时间与空间是一对矛盾体。
+
+优化的方法：`时间换空间`, `空间换时间` .
+
+在开发中，会员的信息优化往往是，把频繁用到的信息，优先考虑效率，存储到一张表中。不常用的信息和比较占据空间的信息，优先考虑空间占用，存储到另外一张辅表中。 
+
+
+```mysql
+create table member (
+	id int unsigned auto_increment primary key,
+	username char(20) not null default '',
+	gender char(1) not null default '',
+	weight tinyint unsigned not null default 0,
+	birth date not null default '0000-00-00',
+	salary decimal(8.2) not null default 0.00,
+	lastlogin int unsigned not null default 0
+) engine myisam charset utf8;
+
+create table inrto (
+	i_id int unsinged auto_increment primary key,
+	username char(20) not null default '',
+	intro varchar(1500) not null default ''
+);
+```
+
+
+# 修改表
+
+一张表，创建完毕，有了N列。
+之后还有可能要增加或删除或修改列
+
+**新增列**
+
+	alter table 表名 add 列名称 列类型 列参数; [增加在表的最后]
+	alter table 表名 add 列名称 列类型 列参数 after; 某列[把新列指定增加到某列后面]
+
+新建一个列在表的最前面，使用`first`
+	
+	alter table 表名 add 列名称 列类型 列参数 first;
+	alter table m1 add pid int not null defalut '' first;
+
+```mysql
+alter table m1 add username char(20) not null default '';
+alter table m1 add birth date not null default '0000-00-00';
+```
+
+
+**删除列**
+
+alter table 表名 drop 列名;
+
+```mysql
+alter table m1 drop pid;
+``` 
+
+**修改列**
+
+修改列类型
+
+alter table 表名 modify 列名 新类型 新参数;
+
+```mysql
+alter table m1 modify gener char(4) not null default ''; 
+```
+
+
+修改列类型和列名
+alter table 表名 change 旧列名 新列名 新类型 新参数
+
+```mysql
+alter table m1 change id uid not null auto_increment primary key; 
+```
+  
+如果列类型改变了，导致数据存储不下了怎么处理?
+比如：int 修改成 smallint 列. 如果不匹配，数据将会丢失，或者在mysql严格模式下 (strict mode) 下修改不成功.
+
+
+
+# ecshop 商品表
+
+``` mysql
+# shop
+# 分析商品表
+# 建立类似的
+# 小型表
+# 
+# 商品表
+# 
+# goods_id 商品主键
+# cat_id 栏目id
+# goods_sn 货号
+# goods_name 商品名称
+# click_count 点击量
+# brand_id 品牌
+# goods_number 库存量
+# goods_weight 重量
+# market_price 市场价格
+# shop_price 本店价格
+# promote_price 优惠价格
+# warn_number 报警数量
+# keywords 关键字
+# goods_thumb 小图
+# goods_img 中等图
+# original_img 原始图
+# is_real 真实商品，与：extension_code 有关，还有虚拟商品
+# extension_code  
+# is_on_sale 是否上架状态
+# is_alone_sale  是否单独销售，赠品
+# is_shipping 是否包邮
+# integral 送的点数 
+# add_time 添加的时间戳
+# sort_order 排序的权重
+# is_delete 是否删除
+# is_best 是否精品
+# is_new 是否新品
+# is_hot 是否热卖
+# is_promote 
+# bounts_type_id 优惠券
+# last_update 上次修改时间
+# goods_type 商品类型
+# seller_note 买家备注
+
+# 商品表
+# goods_id, cat_id, goods_sn, goods_name, click_count, 
+# goods_number, market_price, shop_price, add_time, is_best, is_new, is_hot
+
+# 查看其它 表创建
+# show create table 表名 
+# show create table ecs_goods; 
+
+CREATE TABLE `goods` (
+  `goods_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `cat_id` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `goods_sn` varchar(60) NOT NULL DEFAULT '',
+  `goods_name` varchar(120) NOT NULL DEFAULT '',
+  `click_count` int(10) unsigned NOT NULL DEFAULT '0',
+  `goods_number` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `market_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `shop_price` decimal(10,2) unsigned NOT NULL DEFAULT '0.00',
+  `add_time` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_best` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_new` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_hot` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`goods_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8
+
+
+# 导入其它表中的相同字段的数据
+# insert into 导入表 select 导入字段 被导入表
+
+insert into zf.goods select goods_id, cat_id, goods_sn, goods_name, click_count, goods_number, market_price, shop_price, add_time, is_best, is_new, is_hot from ec_goods;
+
+```
+
+# SQL查询表达式
+
+**查询练习**
+
+1. 查询商品主键是32的商品
+
+	select goods_id, goods_name, shop_price from goods where goods_id = 32;
+	
+2. 不属于第三个栏目的所有商品  即cat_id 不等于 3 
+	`!=` 等价于 `<>`
+
+	select goods_id, goods_name, shop_price, cat_id from goods where cat_id != 3;
+	select goods_id, goods_name, shop_price, cat_id from goods where cat_id <> 3;
+	
+3. 本店商品价格高于三千的商品	
+	
+	select goods_id, goods_name, goods_price from goods where goods_price > 3000;
+	
+4. 本店商品价格小于或等于100的商品
+	
+	select goods_id, goods_name, shop_price from goods where shop_price<=100;
+	
+5. 取出第4栏目和第11栏目的商品(不许用or)
+
+	select goods_id, cat_id, goods_name from goods where cat_id in(4, 11);
+	
+6. 取出100<=价格<=500 的商品(不许用and)
+
+	select goods_id, goods_name, shop_price from goods where shop_price between 100 and 500;
+
+注意：in是 是散的满足。 between 范围的满足.	
+
+7. 取出不在第3个栏目和不在第11个栏目的商品(and或not in 分别实现) 。 即栏目的id，是3的不要，是11的也不要。
+
+	select goods_id, goods_name, shop_price, cat_id from goods where cat_id not in(3, 11);
+	select goods_id, goods_name, shop_price, cat_id from goods 	
+	
 
