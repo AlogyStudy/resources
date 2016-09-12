@@ -125,7 +125,7 @@ delete form class;
 ## 查
 select基础查询
 
-查询三要锁
+查询三要素
 1. 查询那张表的数据
 2. 查询那些记录
 3. 查询那些字段
@@ -578,9 +578,56 @@ insert into zf.goods select goods_id, cat_id, goods_sn, goods_name, click_count,
 
 注意：in是 是散的满足。 between 范围的满足.	
 
-7. 取出不在第3个栏目和不在第11个栏目的商品(and或not in 分别实现) 。 即栏目的id，是3的不要，是11的也不要。
+7. 取出不在第3个栏目和不在第11个栏目的商品(and或not in 分别实现) 。 即栏目的id，是3的不要，是11的也不要。 
+	// $cat_id !=3 && $cat_id != 11;
 
 	select goods_id, goods_name, shop_price, cat_id from goods where cat_id not in(3, 11);
-	select goods_id, goods_name, shop_price, cat_id from goods 	
+	select goods_id, goods_name, shop_price, cat_id from goods where cat_id != 3 and cat_id != 11;
 	
+8. 取出价格大于100且小于300，或者大于4000且小于5000的商品 
+	在[100, 300] 之间，或者 是 [4000,5000]
+			
+	select goods_id, goods_name, shop_price, cat_id from goods where (shop_price>100 and shop_price<300) or (shop_price>4000 and shop_price<5000);
+	  	 	
+and 的优先级比 or 高
+
+9. 取出第3个栏目下面价格 < 1000 或 > 3000, 并且点击量 >5 的系列商品
+	
+	select goods_id, goods_name, shop_price, cat_id, click_count from goods where cat_id = 3 and ( shop_price < 1000 or shop_price>3000 ) and click_count >= 5;	
+	 	
+怎么要求就怎么写
+
+10. 取出1号栏目下的商品 (无限级分类) 大分类 --> 小分类 --> 小分类 。。。
+	
+	select goods_id, goods_name, cat_id from goods where cat_id = 1;
+	
+11. 取出名字以"诺基亚"开头的商品
+
+	select goods_name, shop_price from goods where goos_name like '诺基亚%';
+	
+`%` 匹配任意字符.
+
+12. 取出已名字"诺基亚N"后面固定的二位字符. 
+
+	select goods_name, goods_id from goods where goods_name link '诺基亚N__';
+	
+`_` 匹配任意单一字符			
+
+
+# SQL 查询模型
+
+把列看成变量，把where看成PHP中 if ( exp ) 里的 exp 表达式
+哪些行被取出，哪一行能够让表达式为true，那一行就能够取出来。
+
+判断这一行取出什么?
+
+	 
+
+	
+
+
+
+
+
+
 
