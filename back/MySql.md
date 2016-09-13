@@ -616,18 +616,112 @@ and 的优先级比 or 高
 
 # SQL 查询模型
 
+## select 字句
+
 把列看成变量，把where看成PHP中 if ( exp ) 里的 exp 表达式
 哪些行被取出，哪一行能够让表达式为true，那一行就能够取出来。
 
 判断这一行取出什么?
-
-	 
-
-	
-
-
+```mysql
+select goods_id, goods_name from goods where 1>2;
+```
+取出为空
 
 
+把列看成变量。
+既然变量，变量之间也是可以运算。
+
+取出商品id，商品名，本店价格比市价价格省的钱
+```mysql
+select goods_id, goods_name, (market_price - shop_price) from goods;
+select goods_id, goods_name, (market_price - shop_price) from goods where 1;
+```
+表中原本就没有(market_price - shop_price) 的列
+这一列其实是一个运算结果，术语叫"广义投影". 理解成字段运算.
+
+列的运算结果，可以当成列看，还可以起个列别名。 (伪列)
+
+```mysql
+select goods_id, goods_name, (market_price - shop_price) as discount from goods where cat_id!=3;
+```
+-----
+
+查出本店价比市场省的钱，而且省200以上的商品.
+
+```mysql
+select goods_id, goods_name, (market_price - shop_price) as discount from goods where (market_price - shop_price) > 200;
 
 
 
+select goods_id, goods_name, (market_price - shop_price) as discount from goods where discount > 200; # 报错
+# where 后面不能使用别名。
+
+# where 查询 --> 结果 (多行多列的二维结构)
+
+# where 查询的结果是对 表 中的数据发挥作用， 查询出数据。
+# discount 是在结果中数据算出. 
+# where发挥作用时，表上并没有discount列。发挥完作用，形成的结果里才能discount。 
+# 对于结果中的列，如果再想筛选需用使用having
+
+# where 字句就没有discount列，所以报错.
+```
+
+where 条件是表达式，在哪一行表达式为真，哪一行就取出来。
+
+
+题目：
+把num的值处于[20, 29]之间的，改为20
+num值处于[30, 39] 之间的，改为30
+
+```mysql
+create table number ( num smallint not null default 0 ) engine myisam charset utf8;
+
+inset into number values (3), (12), (23), (25), (29), (32), (34), (38);
+
+update number set num = floor(num / 10) * 10 where num>=20 and num<=30;
+# 字段看成变量，可以运算，可以使用函数，可以做成表达式.
+   
+```
+
+## group 子句
+
+max: 求最大。min: 求最小。sum: 求总和。avg: 求平均。count: 求总行数。
+
+1. 查出最贵的商品的价格
+
+```mysql
+select max(shop_price) from goods;  
+```
+
+2. 查处最便宜的商品的价格
+
+```mysql
+select min(shop_price) from goods;
+```
+
+3. 查询出发布最早的商品。即goods_id 最小的值.
+
+```mysql
+select min(goods_id) from goods;
+``` 
+ 
+4. goods_number 是指库存量，统计一下，本店一共库存多少件商品
+
+```mysql
+select sum(goods_number) from goods;
+``` 
+
+5. 查看一个店中的所有商品的平均价格.
+
+```mysql
+select avg(shop_price) from goods;
+```
+
+6. 统计一下本店中有多少的商品。(不是多少个)
+ 
+count 计算 多少条记录.
+
+```mysql
+select count(*) from goods;
+select count(goods_id) from goods;
+```
