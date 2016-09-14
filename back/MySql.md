@@ -685,6 +685,8 @@ update number set num = floor(num / 10) * 10 where num>=20 and num<=30;
 
 ## group 子句
 
+**统计函数**
+
 max: 求最大。min: 求最小。sum: 求总和。avg: 求平均。count: 求总行数。
 
 1. 查出最贵的商品的价格
@@ -720,8 +722,64 @@ select avg(shop_price) from goods;
 6. 统计一下本店中有多少的商品。(不是多少个)
  
 count 计算 多少条记录.
+如果使用字段，来count()计算总共，null并不会计算在其中.
 
 ```mysql
-select count(*) from goods;
-select count(goods_id) from goods;
+select count(*) from goods; # 查询的就是绝对的行数，哪怕某一行所有字段全为null，也计算在内。
+select count(goods_id) from goods; # 字段如果是 null，并不会计算在其中。
 ```
+
+用 count(*)，count(1)，谁更好呢?
+对于myisam引擎的表，没有区别的。因为，这中引擎内部，有一个计数器在维护着行数。
+innodb的表，用count(*)直接读取行数，效率低下，因为innodb真的去数一边。
+
+
+5个统计函数，单独使用，意义不大，要和分组配合起来使用，威力更大。
+
+
+计算，第3个栏目下所有商品的库存量之和  sum(goods_num);
+
+```mysql
+select sum(goods_number)  from goods where cat_id = 3;  
+```
+
+计算，第4个栏目下所有商品的库存量之和 
+```mysql
+select sum(goods_number) from goods where cat_id = 4;
+```
+
+
+**group 子句**
+
+计算，一次计算完，每个栏目下的库存量之和
+按照规则，分组，然后 组内解决总和。
+
+分组之后再统计，结合起来使用。
+
+```mysql
+select sum(goods_number) from goods group by cat_id;
+```
+
+-----
+
+是否正确：
+```mysql
+select goods_id, sum(goods_number) from goods;
+```
+这条语句执行了，把 goods_id，第一次出现的值 取出来。
+对于SQL标准来说，这个语句是错误的，不能执行的。但是在MySQL中可以这么做。(MySQL特征)
+
+
+按cat_id分组，计算每个栏目下的商品的平均价格
+```mysql
+select goods_id, avg(shop_price) from goods group by cat_id;
+```
+	
+
+
+
+
+
+
+
+
