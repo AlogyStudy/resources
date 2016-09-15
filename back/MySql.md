@@ -768,18 +768,107 @@ select goods_id, sum(goods_number) from goods;
 ```
 这条语句执行了，把 goods_id，第一次出现的值 取出来。
 对于SQL标准来说，这个语句是错误的，不能执行的。但是在MySQL中可以这么做。(MySQL特征)
+这是MySQL的一个特点，出于可移植性和规范性，不推荐这样写。
+严格的讲，select 的a, b 列必须在 group by  a, b, c的列出现。
 
 
 按cat_id分组，计算每个栏目下的商品的平均价格
 ```mysql
-select goods_id, avg(shop_price) from goods group by cat_id;
+select goods_id, cat_id, avg(shop_price) from goods group by cat_id;
 ```
 	
 
+## having 子句
+	
+**having筛选**
 
+having 发挥的时间，是where对硬盘上的表文件进行查询之后，内存形成一张结果的虚拟表(伪列存在于此表中)， having在此时生效。
 
+1. 查询本店价比市场价省的钱，并且要求省钱200元以上的取出来。
 
+```mysql
+select goods_id, market_price, shop_price, (market_price - shop_price) as discount from goods having discount > 200;
+# where 没有写出，表示where 1;
+```
+2. 查询每种商品所积压的贷款(提示: 库存 +单价)
+goods_number + shop_price
 
+```mysql
+select goods_id, goods_number, shop_price , (goods_number * shop_price) as hk from goods ;
+```
 
+3. 查询该店积压的总货款。
+	即，每个商品积压的贷款之和。考虑：sum那个列?
 
+```mysql
+select sum(shop_price * goods_number) as zhk from goods;
+```			
 
+4. 查询每个栏目下，积压的货款。
+
+```mysql
+select cat_id, shop_price, goods_number, sum(shop_price * goods_number) as hk from goods group by cat_id;
+```
+
+5. 查询积压货款超过2w元的栏目，以及该栏目积压的贷款。
+
+```mysql
+select cat_id, shop_price, goods_number, sum(shop_price * goods_number) as hk from goods group by cat_id having hk > 20000;
+```
+
+6. 查询本店价比市场价省的钱，且筛选出省钱200以上的商品. (用where 和 having 分别来实现)
+
+```mysql
+#where
+select goods_id, market_price, shop_price from goods where (market_price - shop_price) > 200;
+
+#having
+select goods_id, market_price, shop_price from goods having (market_price - shop_price) > 200;
+select goods_id, market_price, shop_price, (market_price - shop_price) as discount from goods having discount > 200;
+```
+
+-----
+
+查询出2门及2门以上的不及格者的平均成绩
+
+```mysql		
+CREATE TABLE `reslute` (
+  `name` varchar(20) DEFAULT NULL,
+  `subject` varchar(20) DEFAULT NULL,
+  `score` tinyint(4) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+
+insert into reslute values ('zhangsan', 'math', 90), ('zhangsan', 'ch', 50), ('zhangsan', 'dili', 40), ('lisi', 'ch', 55), ('lisi', 'zhengzhi', 45), ('wangwu', 'zhengzhi', 30);
+```
+
+错误
+```mysql
+select name, avg(score), count(score < 60) as sc from reslute group by name having sc >= 2;
+```
+
+正确查询
+```mysql
+# 1: 查询所有的平均分
+select name, avg(score) from reslute group by name;
+
+# 2: 想办法计算出每个人挂科的情况
+select name, subject, score, score<60 as g from reslute;
+
+# 3: 挂科数目，就是g 列的 sum() 结果.
+# 总和下
+select name, avg(score), sum(score < 60) as sc from reslute group by name having sc >= 2;
+```
+
+![](./_image/2016-09-15-15-44-05.jpg)
+
+## order by 与 limit 
+**order by**
+语法: `order by 列名 desc/asc`. (列名，结果集中的列名)    
+例如:  `order by add_time asc` . 按发布时间升序排列.
+
+1. 取出第4个栏目下的商品，并按价格由高到低排序。
+```mysql
+select goods_id, goods_name, shop_price from goods where cat_id = 4 order by shop_price desc;
+```
+
+**limit**
