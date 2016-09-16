@@ -871,4 +871,206 @@ select name, avg(score), sum(score < 60) as sc from reslute group by name having
 select goods_id, goods_name, shop_price from goods where cat_id = 4 order by shop_price desc;
 ```
 
+2. 按栏目升序排列，同一个栏目下的商品，再按商品的价格降序排列
+```mysql
+select goods_id,cat_id, goods_name, shop_price from goods order by cat_id asc, shop_price desc;
+# 多个字段排序，通过`,` 逗号隔开。
+```
 **limit**
+限制条目
+`limit 数量` 限制条数
+`limit [offset] N` 
+offset 偏移量 (可选参数),跳过几行。 N 取出条数。
+offset 如果不写则相当于 `limit  0 N`； offset 是跳过的个数，N是实际取的个数。
+
+1. 本店商品价格最高的商品。
+```mysql
+select goods_id, goods_name, shop_price from goods order by shop_price limit 3;
+```
+2. 本店最高的第三名到第五名 商品。
+```mysql
+select goods_id, goods_name, shop_price from goods order by shop_price desc limit 2,3;
+# 取第3到第5，即意味着跳过， 第1，第2, 因此偏移量offset是2.
+# 取第3,4,5条。即取3条，因此N=3；
+```
+
+3. 取出价格最高的那条商品
+```mysql
+select goods_id, goods_name, shop_price from goods order by shop_price desc limit 1;
+```
+
+4. 查询出每个栏目下id号最大(最新)的一条商品.
+
+```
+# 错误语句分析
+第一种错误：group by cat_id;
+group by cat_id 从语义上来分析，select 的列，只能是cat_id, max/min/avg/sum/count .
+这个 goods_id, goods_name 从语义上分析就不对，也不符合sql标准。
+只是MySQL允许这种语法。
+取出 栏目中 第一次 出现的记录。
+
+第二种错误：name 匹配第一次出现的
+select max(goods_id) as max_cat_id, goods_id, goods_name from goods group by cat_id;
+
+第三种错误：先 order by 再 group by. 语法错误。
+select goods_id, cat_id, goods_name from goods order by cat_id asc, goods_id desc;
+在此基础上，再分组。
+select goods_id, cat_id, goods_name from goods order by cat_id asc, goods_id desc group by cat_id;
+
+需要使用到 子查询.
+```
+
+![](./_image/2016-09-16-00-33-40.jpg)
+
+
+# 子查询
+
+## where 型子查询
+把内层查询的结果，作为外层查询的比较条件
+典型的：查询最大商品，最贵商品。
+
+如果 where 列 = (内层 sql)。 则内层sql返回的必然是单行单列.
+如果 where 列 in (内层 sql)。 则内层sql返回单列， 可以多行。
+
+1. 查询出本店最新的(goods_id最大) 的一条商品。
+
+```mysql
+# 思路，按照goods_id desc 排序，再去 第一行.
+select goods_id, goods_name from goods order by goods_id desc limit 1;
+```
+
+2.  查询出本店最新的(goods_id最大) 的一条商品。要求不要使用排序.
+
+```mysql
+# 思路，求出最大的id， 然后在where判断
+select goods_id, goods_name from goods where goods_id = (select max(goods_id) from goods);
+```
+
+查询出每个栏目下id号最大(最新)的一条商品.
+```
+# 第一步：查询出每个栏目下goods_id 最大的。
+select max(goods_id) from goods group by cat_id;
+# 只需要再把goods_id = 第一步值.
+select goods_name, goods_id from goods where goods_id in (select max(goods_id) from goods group by cat_id);
+```
+
+## from 型子查询
+内层sql的查询结果，当成一张临时表，供外层sql再次查询.
+
+查询模型：查询结果集 ---> 在结构上可以当成表看.
+
+
+查询出每个栏目下id号最大(最新)的一条商品.
+
+```mysql
+select * from (select goods_id, cat_id, goods_name from goods
+order by cat_id asc, goods_id desc) as tmp group by cat_id;
+```
+
+## exists型子查询
+
+把外层sql的结果，拿到内层sql去测试。
+如果内层的sql成立，则该行取出。
+
+查询有商品的栏目.取 栏目标，且只取下面有商品的栏目
+思考：什么样的表，叫做 下面栏目有商品?
+设某栏目cat_id 为N,则 select * from goods where cat_id = N;
+能取出数据，则说明该栏目有商品 
+
+```mysql
+select cat_id, cat_name from category where exists (select * from goods where goods.cat_id = category.cat_id);
+# 从外层SQL取出内层SQL需要的字段值，然后再通过内层SQL来判断.
+```
+
+## 奇怪的NULL
+
+建表时，列后面 not null defalut ''/default 0; 这是什么意思
+就是让这个列值不为NULL， 如果某个列确实没填，也有默认值，值不为NULL 
+
+为什么列的值不为NULL。
+
+
+```mysql
+create table test5 ( sname varchar(20) ) engine myisam charset utf8;
+
+insert into test5 values ('tianjilaoren'), ('lixunhuan'), ('afei'), NULL;
+
+# 查询出用户名不为null的行
+
+select * from test5 where sname != null;
+
+# tianjilaoren lixunhuan afei 没有查询出来?
+
+#查询 sname 为null 的行
+
+select * from test5 whre sname = null;
+
+#也是空
+
+select 'afei' = null; # 查询结果： NULL
+
+# NULL为家， list=null 是假
+
+select null = null; #查询结果： NULL
+
+# null = null , 还是 null， 还是假
+
+select null != null; #查询结果：NULL
+
+# null是空
+
+# null 的比较需要用特殊的运算符 is null 和 is not null
+
+select * from test5 where sname is not null;
+
+# 取出值为null
+
+select * from test5 where sname is null;
+```
+
+
+null 是一种类型，比较时，只能用专门的is null 和 is not null 来比较 碰到运算符， 一律返回 null.
+效率不高，不利于提高索引效率。
+
+因此，往往在建表的时候声明 `not null default ''/defalut 0`
+
+
+# 新手1+N模式
+
+新手1+N模式查询
+
+```php
+$conn = mysql_connect('localhost', 'root', '');
+
+$sql = 'use zf';
+
+mysql_query($sql, $conn);
+
+$sql = 'set names utf8';
+
+mysql_query($sql, $conn);
+
+$sql = 'select goods_name, cat_id, goods_number, shop_price from goods';
+
+$rs = mysql_query($sql, $conn);
+
+$list = array();
+while ( $row = mysql_fetch_assoc($rs) ) {
+
+	/**
+	 * 根据$row 中的cat_id 在此查询category表
+	 * 每循环一次，又要查询另一张表
+	 * 因此，查询 1+N 次.
+	 */
+	$sql = 'select cat_name from category where cat_id = ' . $row['cat_id'];
+	
+	$rs2 = mysql_query($sql, $conn);
+	
+	$cat = mysql_fetch_assoc($rs2);
+	
+	$row['cat_name'] = $cat['cat_name'];
+	
+	$list[] = $row;
+	
+}
+```
