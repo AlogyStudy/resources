@@ -629,7 +629,7 @@ select goods_id, goods_name from goods where 1>2;
 
 
 把列看成变量。
-既然变量，变量之间也是可以运算。
+既然变量，变量之间也是可以运算，可以作为表达式。可以当作参数，作为函数的参数。
 
 取出商品id，商品名，本店价格比市价价格省的钱
 ```mysql
@@ -1073,4 +1073,533 @@ while ( $row = mysql_fetch_assoc($rs) ) {
 	$list[] = $row;
 	
 }
+```
+
+# 左链接&右链接
+
+## 两表全连接查询
+
+**集合知识**
+
+集合的特点： 无序性 ， 唯一性
+集合的运算：求交集，求并集，笛卡尔积(相乘)
+
+笛卡尔积，即集合的元素，做两两的组合。
+
+
+**表与集合的关系**
+
+一张表就是一个集合
+每一行就是一个元素.
+
+集合不能重复，但可能有两行数据完全一样。
+MySQL内部每一行，还有一个rowid.
+
+-----
+
+场景：
+```mysql
+create table test7 ( id int, name varchar(20) ) engine myisam charset utf8;
+create table test8 ( cat_id int, cat_name varchar(20) ) engine myisam charset utf8;
+
+insert into test7 values (1, '桃子'), (2, '苹果'), (3, '梨');
+insert into test8 values (95, '月亮'), (96, '星星');
+```
+
+在数据库的操作上，如何操作表，完成集合的笛卡尔积的效果。
+直接使用","隔开表名，查询即可。
+
+```mysql
+select * from test7,test8;
+```
+
+两表做全相乘
+从行的角度来看：就是2表每一行，两两组合
+从列的角度来看：结果集中的列，是两表的列名的相加
+
+
+做全相乘
+
+```mysql
+create table minigoods like select * from goods;
+
+select goods_id, minigoods minigoods.cat_id, goods_name, category.cat_id, cat_name from minigoods,category;
+
+# 全相乘
+# 加了条件之后
+select goods_id, minigoods minigoods.cat_id, goods_name, category.cat_id, cat_name from minigoods,category where minigoods.cat_id = category.cat_id;
+
+```
+
+## 左连接语法及应用
+
+Mysql 优化：索引优化, 字段优化, 存储引擎优化 (索引是发生在查询过程中)
+
+假设A表在左，B表在A表的右边滑动。
+A表与B表通过一个关系来筛选B表的行
+
+语法： `A left join B on 条件`
+条件为true，则B表对应的行，取出.
+
+`A left join B on 条件` 这一块形成的也是一个结果集,也可以看成一张表。 可以对 `A left join B on 条件` as C 。可以对C表做查询， 自然where, group, having, order by, limit 照常使用。 还可以继续 left join. `A left join B on 条件 left join D on 条件`
+
+C 表的可以查询的列有哪些列 ?
+A,B 的列都可以查询。
+
+
+```mysql
+select goods_name, goods_number, shop_price, cat_name from goods left join category on goods.cat_id = category.cat_id;
+```
+
+## 左右内连接的区别
+
+没有另一张表对应的行，使用NULL补齐。
+多行对应，该如何解决。
+
+```mysql
+create table boy (
+bname varchar(20),
+other char(1) 
+) engine myisam charset utf8;
+
+insert into boy 
+values 
+('lin','A'),
+('李寻欢','B'),
+('阿飞','C'),
+('呆鹅','D'),
+('Weibo','E'),
+('贾宝玉','F');
+
+create table girl (
+gname varchar(20),
+other char(1)
+) engine myisam charset utf8;
+
+insert into girl
+values 
+('陈志芳','A'),
+('飞儿','C'),
+('飞飞','C'),
+('石头','D');
+```
+- - - - -
+
+```mysql
+select boy.*, girl.* from boy left join girl on boy.other = girl.other;
+```
+
+结果：
+
+| bname     | other | gname       | other  |
+| ------    | -----:| -----:      | :-----:|
+| lin       | A     | chenzhifang | A      |
+| lixunhuan | B     | NULL        | NULL   |
+| afei      | C     | feier       | C      |
+| afei      | C     | feifei      | C      |
+| daie      | D     | shitou      | D      |
+| Weibo     | E     | NULL        | NULL   |
+| jiabaoyu  | F     | NULL        | NULL   |
+
+是以boy表, 为基准。
+
+
+```mysql
+select boy.*, girl.* from girl left join on boy.other = girl.other;
+```
+
+结果:
+
+| bname | other | gname       | other |
+| ----- | ----: | -----:      | :---: |
+| lin   | A     | chenzhifang | A     |
+| afei  | C     | feier       | C     |
+| afei  | C     | feifei      | C     |
+| daie  | D     | shitou      | D     |
+
+是以 girl表 为基准
+
+
+注意：a left join b, 并不是说a表的就一定是在左边，只是说在查询数据时，以a表为准。
+NULL,是补齐，而不是查询出来的。
+
+
+左右连接是可以互换的.
+A left join B, 就等价于 B right join A;
+
+
+```mysql
+select boy.*, girl.* from boy right join girl on boy.other = girl.other;
+```
+
+注意：左右连接 可以互换， 尽量使用 左链接， 出于移植时兼容性方面考虑。
+
+
+**内连接的特点**
+
+```
+select boy.*, girl.* from boy inner join girl on boy.other = girl.other;
+```
+两个表中符合条件且都有值，拿出来。
+
+结果：
+
+| bname | other | gname       | other |
+| ----- | ----: | -----:      | :---: |
+| lin   | A     | chenzhifang | A     |
+| afei  | C     | feier       | C     |
+| afei  | C     | feifei      | C     |
+| daie  | D     | shitou      | D     |
+
+
+从集合的角度看：
+A inner join B 和 left join/right join 的关系：
+内连接是左右连接的`交集`
+
+
+**外连接**
+
+左右连接的并集, 外连接。
+但是，在mysql中不支持外连接。
+
+
+题目：
+
+```mysql
+create table m (
+mid int,
+hid int,
+gid int,
+mres varchar(10),
+matime date
+) engine myisam charset utf8;
+
+
+create table t (
+tid int,
+tname varchar(20)	
+) engine myisam charset utf8;
+
+insert into m 
+values 
+(1,1,2,'2:0','2006-05-21'),
+(2,2,3,'1:2','2006-06-21'),
+(3,3,1,'2:5','2006-06-25'),
+(4,2,3,'3:2','2006-07-21');
+
+
+insert into t 
+values 
+(1,'guoan'),
+(2,'shenhua'),
+(3,'gongyiliandong');
+```
+
+查询 :
+
+```mysql
+# 取出出主客队的ID， 并不做特殊处理.
+select hid, mres, gid, matime from m;
+
+# 根据hid, 左联t表 ，查出主队的队伍名称
+select hid,tname, mres, gid, matime from m left join t on m.hid = t.tid;
+
+# 根据gid， 查出客队的队伍名称.
+
+select hid, tname, mres, tname, gid, tname, matime from 
+(m left join t on m.hid = t.tid) left join t on m.gid = t.tid;
+# 错误的原因 是 m t t 相连， 名字冲突，起个别名，就可以解决.
+# select 列名 as 别名。也可以 .
+
+
+select hid, t1.tname, mres, gid, t2.tname, matime from 
+(m left join t as t1 on m.hid = t1.tid) 
+left join t as t2 on m.gid = t2.tid;
+
+# 最后拼接结果：
+select hid, t1.tname, mres, gid, t2.tname, matime from
+(m left join t as t1 on m.hid = t1.tid)
+left join t as t2 on m.hid = t2.tid
+where matime > '2006-06-01' and matime < '2016-07-01';
+
+#三表联查 + where.
+
+# 第二种方法：使用 inner join 
+select hid, t1.tname, mres, gid, t2.tname, matime from m inner join t as
+t1 on m.hid = t1.tid inner join t as t2 on m.gid = t2.tid where matime > '2006-0
+6-01' and matime < '2016-07-01';
+
+``` 
+
+# 查询完成ecshop留言板
+
+PHP 逻辑来完成留言板查询
+
+```mysql
+header('Content-type: text/html; charset=utf-8');
+
+/**
+ * 商城留言板
+ * 
+ * 一般情况下，做留言板的显示很容易。
+ * 直接select 查询，再显示出来。
+ * 
+ * 但是ecshop中的留言板难点在于
+ * 留言条数来自于2张表。
+ * feedback 留言表
+ * comment 评论表
+ * 
+ * 需要把两张表中的数据都取出来，显示结果。
+ */
+ 
+/**
+ * 思路：从业务逻辑层，用PHP来解决问题
+ * 1. 先取出feedback 表，循环取出数据，放入一个数组
+ * 2. 再取出comment 表，循环取出数据，放入一个数组
+ * 3. 取出的两个数组合并
+ * 4. 循环合并后的数组
+ */ 
+
+$counn = mysql_connect('localhost', 'root', '');
+
+$sql = 'use ecshop';
+mysql_query($sql, $counn);	
+ 
+$sql = 'set names utf8';
+mysql_query($sql, $counn);
+
+// 取出feedback表中数据
+$sql = 'select user_name, msg_content, msg_time from ecs_feedback where msg_status = 1';
+
+$feeds = array();
+$rs =	mysql_query($sql, $counn);
+
+while ( $row = mysql_fetch_assoc($rs) ) {
+	
+	$feeds[] = $row; 
+	
+}
+
+// 取出comment表中数据
+$sql = 'select user_name, content as msg_content, add_time as msg_time from ecs_comment where status = 1';
+$rs = mysql_query($sql, $counn);
+
+$comm = array();
+while ( $row = mysql_fetch_assoc($rs) ) {
+	
+	$comm[] = $row;
+			
+}
+
+$all = array_merge($feeds, $comm);
+
+```
+
+## union用法深入讲解
+
+union : 合并 2 条 或多条语句的结果.
+
+语法：sql1 union sql2;
+
+
+1. 查询出价格低于100元 和 价格高于4000元的商品.(不能使用 or)
+
+```mysql
+# 先查询<100的商品
+select goods_id, goods_name, shop_price from goods where shop_price < 100;
+
+# 查询 > 4000 的商品
+select goods_id, goods_name, shop_price from goods where shop_price > 4000;
+
+# 使用，union  联合查询 、
+
+select goods_id, goods_name, shop_price from goods where shop_price < 100 union select goods_id, goods_name, shop_price from goods where shop_price > 4000;
+
+```
+
+* 能否从2张表查询在union呢?
+union 合并的是 '结果集'，不区分来自于那一张表。
+
+取自于2张表，通过别名让2个结果集的列一致。
+那么，如果取出的结果集，列名字不一样，还能否union。
+可以使用 union，而且取出的最终列名，以第一条SQL为准.
+
+* union 满足什么条件就可以使用 ?
+结果集中的字段数量一致
+
+列的类型不一致，不一样，没关系，也是可以合并的。合并的意义不大。
+
+
+* union 后的结果集，可否再排序呢?
+可以再排序。 sql1 union sql2 order by 字段;
+```mysql
+select goods_id, goods_name, shop_price from goods where shop_price < 100 union select goods_id, goods_name, shop_price from goods where shop_price > 4000 order by shop_price asc;
+```
+
+* 用union,取出第4个栏目的商品和第5个栏目的商品，并按价格升序排列.
+
+```mysql
+select goods_id, goods_name, shop_price from goods where where cat_id = 4 union select goods_id, goods_name, shop_price from goods where cat_id = 5 order by shop_price asc;	
+```
+
+* 使用 order by 的注意事项
+
+sql 语句中的 desc 没有发挥作用.
+
+外层的语句还要对最终结果，再次排序。因此，内层的语句的排序，就没有意义。
+因此: 内层的order by 语句单独使用， 不会影响结果集，仅排序。在执行期间，就被MySQL的代码分析器优化。
+内层的order by 必须能够影响结果集时，才有意义。 比如 配合 limit 使用。
+根据是否影响结果集，选择性优化。
+
+* 第3个栏目下，价格前3高的商品 和 第4个栏目下， 价格前2 高的商品。(使用union完成)
+
+```mysql
+(select goods_id, cat_id, goods_name, shop_price from goods where cat_id = 3 order by shop_price asc limit 3)
+union
+(select goods_id, cat_id, goods_name, shop_price from goods where cat_id = 4 order by shop_price asc limit 2);
+```
+
+内层的order by 发挥了作用， 因为有 limit。order by 会实际影响结果集，有意义。
+
+
+* 如果 union后的结果有重复(即某2行，或N行， 所有的列，值都一样),如何变化。
+
+这种情况下，是比较常见的，默认会去重复。
+
+如果不想去重复。
+可以使用 union all;
+
+
+**union 面试题**
+懒，能写一行绝不写二行。
+
+```mysql
+CREATE TABLE `num1` (
+  `id` varchar(10) DEFAULT NULL,
+  `num` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `num2` (
+  `id` varchar(10) DEFAULT NULL,
+  `num` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+insert into num1 values ('a', 5), ('b', 10), ('c',15), ('d', 10);
+
+insert into num2 values ('b', 5), ('c', 15), ('d', 20), ('e', 99);
+
+```
+------
+```mysql
+# 查询
+select id, sum(num) from (select * from num1 union all select * from num2) as tmp order by id;
+```
+
+# 数学函数与字符串函数
+
+[MySQL函数](http://wiki.jikexueyuan.com/project/mysql/useful-functions/string-functions.html)
+
+**数学函数**
+sqrt(); 计算指定数字的平方根
+rand(); 生成随机数
+
+
+**聚合函数**
+
+avg(col); 返回指定列的平均值
+count(col); 返回指定列中非null值的个数
+min(col); 返回指定列的最小值
+max(col); 返回指定列的最大值
+sum(col); 返回指定列的所有值之和
+group_concat(col); 返回由属于一组的列值连接组合而成的结果
+
+
+ 
+**字符串函数**
+
+ascii(); 计算字符的ascii码
+length(col); 计算字符串的字节长度 
+char_length(col); 计算字符数
+reverse(col); 字符串反转
+position('@' in 'abc@sina.com') 返回字符串位置
+right('abc@sina.com', 8); 返回 后边的 字符串
+
+```mysql
+create table test14 (uname varchar(20), email varchar(30))engine myisam charset utf8;
+inesrt into test14 values ('lily', 'lily@163.com'), ('zhifang', 'zhifang@qq.com');
+select email, right( email, length(email) - position('@' in email) ) from test14;
+
+# 对于email，并非全部的存储一个字段，而是分开存储了，变得更加高效。
+# 把 email拆成 @ 前后2部分，放在2个列。
+```
+
+
+## 时间函数与流程控制函数
+
+**时间函数**
+
+now(); 返回 年月日时分秒
+curdate(); 返回 年月日
+curtime(); 返回 时分秒
+dayofweek('2016-09-18'); 查看某一天，是那一周的第几天 . (西方的周日第一天).
+week( curdate() );   查看某一年的第几周. 38 
+
+```mysql
+create table jiaban (
+num int,
+dt date	
+)engine myisam charset utf8;
+
+insert into jiaban 
+values
+(5, '2012-09-01'),
+(6, '2012-09-02'),
+(7, '2012-09-03'),
+(8, '2012-09-04'),
+(9, '2012-09-05'),
+(10, '2012-09-06'),
+(11, '2012-09-07'),
+(12, '2012-09-08'),
+(13, '2012-09-09'),
+(14, '2012-09-10'),
+(15, '2012-09-11'),
+(16, '2012-09-12');
+
+# 按周统计加班时间
+
+select sum(num), week(dt) as wk from jiaban group by wk;
+
+```
+
+**加密函数**
+
+md5(); md5加密，不可逆，单向加密，不可逆。
+
+良好的加密：
+1， 不可逆性
+2. 碰撞性低 （重复的概率低）
+
+
+**控制流程函数**
+
+case 值 when 某种可能 then 返回值 when 另一种可能值 then 返回值 else 默认值 end
+
+```mysql
+select sname, case gender when 1 then '男' when 0 then '女' end as xingbie from test15;
+```
+
+if ( 条件, '', '' ); 三元运算符 
+
+```
+select sanme, if (gender=0, '优先', '等待') as vip from test15;
+```
+
+ifnull(expr1, epxr2); 判断第一个表达是否为null，如为null， 返回第2个表达式的值; 如不为null，返回自身，即表达式1.
+
+```mysql
+ifnull(null, 0);
+ifnull('',0);
 ```
