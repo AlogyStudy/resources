@@ -1718,4 +1718,157 @@ drop view gui;
 
 ## 视图algorithm
 
+```mysql
+cretae view v1
+as
+select * from goods where shop_price>300;
+```
+
+下次查询价格>300 且小于500
+
+```mysql
+select * from v1 where shop_price<500;
+
+
+select * from goods where shop_price > 300 and shop_price < 500;
+```
+
+把建视图时的条件 和 查视图的条件 叠加起来， 直接去查表。
+
+对于一些简单视图，在发挥作用的过程中，并没有建立临时表，而只是 把条件存起来，下次来查询，把条件一合并，直接去查表。
+
+
+条件叠加相比于建临时表，那个快。
+建表：查询->形成临时表->查询临时表
+
+叠加：合并条件->查询表
+
+
+需要建立临时表么，还是合并语句。
+
+algorigthm作用就是是否需要合并条件查询语句
+
+algorigthm=merge (合并查询语句)
+temptable 临时表
+undefined 未定义，由系统判断
+
+```mysql
+create algorithm = merge view v2
+as 
+select * from goods where shop_price > 300;
+
+select goods_id, goods_name, shop_price from v2 from where shop_price < 500;
+```
+v2视图，并没有建立临时表
+有时候，在复杂查询下，必须建立临时表。
+比如，每个栏目的平均价格。
+```mysql
+create view v3 as select *  from goods order by cat_id asc, shop_price desc;
+```
+下次再查，每个栏目最高的商品价格
+```mysql
+select * from v3 group by cat_id;
+```
+思考：如何合并这两个语句。
+
+合并后，语句 出错了.
+此时，语句不能合并，只能先建立临时表。
+
+```mysql
+create algorithm=temptable view v3 as
+select goods_id, cat_id, goods_name, shop_price from goods order by cat_id asc, shop_price desc;
+```
+这张表，明确指定了生成临时表。
+如果拿不准用什么，或者不愿意考虑。alogrithm=undefind .让系统做决定.
+
+对于简单查询使用 alogrihtm=merge
+
+
+# GB2312与UTF8编码
+
+**字符集**
+
+计算机中，只有 01010101
+而人的世界中，有文字，有图片，有声音。
+
+01 ----> 文字对应起来
+
+认为的约定
+65-->A
+66-->B
+...
+
+二进制编码 到 字符的映射，就是字符集
+
+
+**ASSIC**
+
+1个字节8个位，就足够。实际上ASSIC ，使用7个位表示就足够。
+0-127来表示
+0xxx xxxx 来表示。最高位始终是0
+
+gb2312 --> gbk
+汉字2个字节
+碰到>128的，就再往后找一字节，2个字节理解成中文。
+继续找，找到>128,就带一个字节。<127 一个字节表示。
+
+
+
+解决了多字节之后，又引来一个问题--世界各国的字符集，兼容问题。
+
+**Uincode**
+Unicode是一个世界通用的码表
+
+unicode 与 utf-8 的关系?
+unicode 是 4个字节存储。
+unicode 只负责分配编号，而不负责在网络上传输，需要经过一定的规则进行简化。
+转换格式：UTF。
+压缩方式：UTF-8。
+
+就像原文件 --> 压缩文件的关系
+
+给定unicode字符 --> uft-8 的二进制值.
+utf-8的二进制值 --> unicode字符。解码与编码问题.
+
+utf8占用几个字节呢?
+不可能定长，压缩规则才有效果。 1-6个字节. 
+
+
+GBK中文经常在java中，被转为utf-8，如何转?
+GBK和 unicode有对应关系
+
+GBK->unicode->utf-8
+
+
+**乱码如何形成的?**
+
+1. 解码时，与实际编码不一致，`可修复`。
+2. 传输过程中，编码不一致，导致字节丢失`不可修复`。
+
+
+# MySQL字符集参数
+
+**set names作用**
+客户端的字符集，设为A GBK
+数据库的字符集设为B UTF8(建表的时候设置的编码)
+
+客户端收集到是什么编码 和 服务器想存成什么编码.
+
+
+连接器的特性：链接客户端与服务器
+客户端的字符先发给连接器，连接器选择一种编码将其转换，临时存储。
+再次转换成，服务器需要
+
+
+
+clientGBK --> 转connUTF8, connUTF8-->不转换，服务器UTF8
+clientGBK --->GBK不转给连接器， connGBK ， 转connUTF8 -->	服务器UTF8
+
+
+
+
+
+
+
+
 
