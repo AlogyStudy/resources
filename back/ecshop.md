@@ -3,6 +3,9 @@
 框架: 只有基础公共代码，而没有业务逻辑的产品，就是框架。
     ThinkPHP, YII, CI....
 
+HTML + CSS + JavaScript + PHP语法 +ＭySQL --> PHP初级程序猿， 3000-4000元
+Smarty + AJAX + jQuery + webService -->PHP中级程序猿 5000-6000-8000
+
 # MVC
 从基本到显示逻辑相分离
 需要将显示和逻辑的结果放在一起。 需要在PHP文件中，将HTML代码载入。
