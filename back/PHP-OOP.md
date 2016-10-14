@@ -505,6 +505,623 @@ $li->subTell();
 
 子类继承父类的属性/方法，可以修改或增加。
 
+继承过来的环境是: `protected/public`
+父类有的，继承过来，
+继承过来，可以修改/覆盖。
+父类没有的，可以添加。
+
+
+**继承时的权限变化**
+
+继承自父类的属性或方法权限只能越来越宽松或不变，但是不能越来越严格
+
+```php
+<?php
+	class Human {
+		public function cry() {
+			echo '111<br/>';
+		}
+	}
+	
+	class Stu extends Human {
+		
+		protected function cry() {
+			
+			echo '595959 <br />';
+			
+		}
+		 
+	}
+	
+	/**
+	 * 报错
+	 */
+	// 子类的cry比父类的cry方法，权限要严格，会报错。
+	// 继承时，权限只能越来越宽松或不变，并不能越来越严格。 
+	
+?>
+```
+
+# 构造方法的继承
+
+构造方法也是可以继承的，而且继承的原则和普通方法一样。
+如果子类也声明构造函数，则父类的构造函数，被覆盖了。
+如果父类构造函数被覆盖了，自然只执行，子类中的新的构造函数.
+
+```
+<?php
+
+	class Human {
+		public function __construct() {
+			echo '呱呱坠地';
+		}
+	}
+
+	class Stu extends Human {
+		
+	}
+
+	class Lawer extends Human {
+		public function __construct() {
+			echo 'king';
+		}
+	}
+	
+	$ming = new Stu();
+	
+?>
+```
+
+
+问题：
+如果是一个数据库类，或者model类。
+肯定是要继承过去再使用，不能直接操做model类。
+而model类的构造函数，又做了许多初始化工作。
+
+重写的model类的构造函数之后，导致初始化工作完成不了。
+如果：子类继承时，子类有构造函数，需要手动调用一次父类的构造函数: `parent::__construct`
+
+```php
+<?php
+	class Mysql {
+		
+		protected $con = NULL;
+		
+		public function __construct() {
+			$this->con = mysql_connect('localhost', 'root', '');
+		}
+		
+		public function query( $sql ) {
+			return mysql_query($sql, $this->con);
+		}
+		
+	}
+	
+	class MyDb extends Mysql {
+		
+		public function __construct() {
+			// 如果子类继承时，有构造函数，保险一点
+			parent::__construct();
+			return true;
+			
+		}
+		
+		public function autoInsert() {
+			return $this->query('use test');
+		} 
+		
+	}
+	
+//	$mysql = new Mysql();
+//	var_dump($mysql->query('use test'));
+	
+	$mysql = new MyDb();
+	
+	var_dump($mysql->autoInsert());
+		
+?>
+```
+
+# 权限控制详解
+
+public_protected_private权限控制详解
+
+继承：
+subClass extends parentClass {}
+
+继承的特点：
+对于protected/public 类型的属性/方法，完全继承过来，有权重新，调用。
+
+继承过来的属性/方法：
+父类有的，子类也有，
+父类有点，子类可以改写，
+父类没有的，子类可以添加。
+
+对于pricate类型的属性/方法，比较特殊、
+可以继承过来，但是有个标记，标记从属父类。
+即：在子类中是无权调用继承过来的私有属性/方法的。
+
+构造方法的继承：
+构造方法可以继承，
+new子类时，如果构造方法继承过来的，当然也是自动执行。
+但继承过来，子类重写了，自然执行子类的构造方法。(注意：父类的构造方法不再调用)
+
+
+**public,protected,private区别**
+
+```
+<?php
+
+	class Human {
+		
+		private $name = 'changzhifang';
+		protected $money = 3000;
+		public $age = 23;
+		public function say() {
+			echo $this->money, '--', $this->age;
+		}
+		
+	}
+
+	class Stu extends  Human {
+		private $npy = 'lin';
+		public function talk() {
+			echo $this->money, '--', $this->age;
+		}
+	}
+
+	
+	$zf = new Stu();
+	
+//	echo $zf->npy; // 类外不能调用private
+//	echo $zf->money; // 类外不能调用protected
+	echo $zf->age; // public 能够在类外调用
+	
+	 
+?>
+```
+
+总结：
+public 可以在类外调用，权限宽松，protected和private不能在类外调用。
+
+| privated | protected | public |
+| :---: | :-----:| :---: |
+| 本类 | Y | Y | Y |
+| 子类 | N | Y | Y |
+| 外部 | N | N | Y |
+
+PHP中，如果三个修饰符(privated,protected,public)都不写的则理解为public。
+
+
+# 多态 
+
+强类型语言中的类型检测，过于死板。
+
+```php
+<?php
+
+	// 多态
+	
+	class Light {
+		
+		/**
+		 * 玻璃参数
+		 */
+		public function ons( $g ) {
+			$g->display();
+		}
+			
+	}
+	
+	class RedGlass {
+		public function display() {
+			echo 'red light';
+		}
+	}	
+	
+	class BuleGlass {
+		public function display() {
+			echo 'blue light';
+		} 
+	}
+	
+	class GreenGlass {
+		public function display() {
+			echo 'green light';
+		}
+	}
+	
+	// 手电筒
+	$light = new Light();
+	
+	// 三块玻璃
+	$redGlass = new RedGlass();
+	$buleGlass = new BuleGlass();
+	$greenGlass = new GreenGlass();
+	
+	$light->ons($redGlass);
+	echo '<hr />';
+	$light->ons($buleGlass);
+	echo '<hr />';
+	$light->ons($greenGlass);
+
+?>
+```
+
+PHP是弱类型动态语言。
+一个变量，没有类型，装什么数据结构也行。
+传什么参数都行。
+
+对于PHP动态语言来说，岂止是多态，简直是变态。
+
+过于灵活，不能这样灵活。不能称之为多态。
+
+控制PHP的灵活程度：
+对参数进行控制。
+
+```
+<?php
+
+	// 多态
+	
+	class Light {
+		
+		// 加一个类名作为参数类型检测
+		public function ons(RedGlass $g ) {
+			$g->display();
+		}
+			
+	}
+	
+	class RedGlass {
+		public function display() {
+			echo 'red light';
+		}
+	}	
+	
+	class BuleGlass {
+		public function display() {
+			echo 'blue light';
+		} 
+	}
+	
+	class GreenGlass {
+		public function display() {
+			echo 'green light';
+		}
+	}
+	
+	// 手电筒
+	$light = new Light();
+	
+	$red = new RedGlass();
+	
+	$blue = new BlueGlass();
+	
+	$light->ons($red);
+	
+	$light->ons($blue); // 报错
+?>
+```
+
+加了类型检测后，会报错。
+解决方法： 参数定义为符类型，传其子类型。
+哲学：子类是父类.  白马是马，黑马也是马.
+
+开发中是：里氏代换： 原能用父类的场合，都可以用子类来代替。
+
+
+```
+<?php
+
+	// 多态
+	
+	class Light {
+		
+		// 加一个类名作为参数类型检测
+		public function ons(Glass $g ) {
+			$g->display();
+		}
+			
+	}
+	
+	class Glass {
+	}
+	
+	class RedGlass extends Glass {
+		public function display() {
+			echo 'red light';
+		}
+	}	
+	
+	class BuleGlass extends Glass {
+		public function display() {
+			echo 'blue light';
+		} 
+	}
+	
+	class GreenGlass extends Glass {
+		public function display() {
+			echo 'green light';
+		}
+	}
+	
+	// 手电筒
+	$light = new Light();
+	
+	$red = new RedGlass();
+	
+	$blue = new BuleGlass();
+	
+	$light->ons($red);
+	
+	$light->ons($blue);
+	
+?>
+```
+
+如果按PHP本身的特点，不检测类型，本身就可以说是多态的，甚至变态的。
+
+在PHP5.3以后，引入了对于对象类型的参数检测。
+注意 只能检测对象所属的类。
+
+对于PHP来说，限制了其灵活性，达到的多态的效果。
+
+
+反思多态：
+其实就是 只抽象的声明父类，具体的工作由子类对象来完成。
+这样，不同的子类对象完成，有不同的特点。
+
+
+# 静态属性/静态方法
+
+在属性或者方法前，加static修饰，这种称为静态属性/静态方法
+
+从内存角度看：
+static属性/方法，存放在类的区域中
+普通属性，存放在对象中
+
+
+**静态属性**
+
+推导：
+1. 类声明完毕，该属性就会存在。
+2. 类在内存中就一个，因此静态属性就一个。
+
+```
+<?php
+
+class Human {
+	
+	static public $head = 1;
+	public function changeHead() {
+		Human::$head = 9;
+	}
+	public function getHead(){
+		return Human::$head;
+	}
+	
+	// 没有对象，想访问静态的 $head属性
+	
+	/**
+	 * 普通属性包在对象中， 用 对象->属性名， 来访问.
+	 * 
+	 * 静态属性放在类中，使用什么来访问。
+	 * 使用类来访问
+	 */
+	 
+	 // 静态属性既然存放在类空间内：
+	 // 1. 类声明完毕，该属性就已经存在，不需要依赖于对象而访问。
+	 // 2. 类在内存中就一个，因此，静态属性就一个。 
+	 
+}
+
+
+echo Human::$head; // 当一个对象都没有，静态属性随类申明而存在。
+
+
+// 静态属性就一个，受影响后，所有的对象，
+$m1 = new Human(); // 1
+$m1->changeHead();
+
+$m2 = new Human();
+$m3 = new Human();
+
+echo $m2->getHead(); // 9
+echo $m3->getHead(); // 9
+
+?>
+```
+
+**静态方法**
+
+```
+static public/protected/privated function t() {
+	
+}
+```
+
+普通方法，存在于类内的，只有1份。
+静态方法，存在于类内，只有1份。
+
+区别：
+普通对象，需要对象去调用，需要绑定$this。(普通方法，必须要有对象，用对象调用。)
+静态方法，不属于那个对象，因此不需要去绑定$this(静态方法，通过类名就可以调动)
+
+
+**无对象，不使用$this**
+
+非静态方法，是不能由类名静态调用的。PHP中的面向对象检测并不严格，只要该方法没有`$this`，就会转化为静态方法来调用。
+
+但是，在PHP5.3的`strict模式`下，或者PHP5.4的默认级别。都已经对类名静态方法做了提示。
+
+```
+<?php
+
+	// 普通方法，存在于类内的，只有1份。
+	// 静态方法，存在于类内，只有1份。
+	
+//	区别：
+//	普通对象，需要对象去调用，需要绑定$this。
+//	静态方法，不属于那个对象，因此不需要去绑定$this
+
+		error_reporting(E_ALL|E_STRICT);
+
+		class Human {
+			
+			static public function cry() {
+				echo '5555';
+			}
+			
+			public function eat() {
+				echo 'ect';
+			}
+			
+		}
+	
+		Human::cry();
+		
+		// eat 方法，是非静态方法，应该由对象调用。
+		Human::eat();
+	
+?>
+```
+
+
+类 --> 静态方法  √
+类 --> 动态方法(在类中没有`$this`可以，但是不支持这种方式)  X
+
+对象 --> 动态方法 √
+对象 --> 静态方法 √
+
+
+# self_parent讲解
+
+static 修饰的静态属性 与 静态方法。
+
+静态属性: 存储于类空间，类声明完毕即存在，不依赖于对象。(在内存中只有一份)
+
+静态方法(无论静态与否，都是在类空间中，只有一份): 不绑定`$this`
+
+
+static方法的特点的例子：
+```php
+<?php
+
+class A {
+	public function foo() {
+		
+		if ( isset($this) ) {
+			echo '$this is defined (' . get_class($this) . ') <br/>';
+		} else {
+			echo '$this is not defined <br/>';
+		}
+		
+	}
+}
+
+class B {
+	
+	public function bar() {
+		A::foo();
+	}
+	
+}
+
+
+$a = new A();
+$a->foo(); // true
+
+A::foo(); // false
+
+$b = new B();
+$b->bar(); // true  // bar 是普通方法，$b绑定到$this,bar(){ A::foo- 这里是静态调用，不操作$this }
+										// $this is defined (B); 
+
+B::bar(); // false
+
+?>
+```
+
+**self的用法** 
+
+self： 本类，本身.
+parent: 父类
+
+在引入自身的静态属性/静态方法
+以及父类的方法时，可以使用到。
+
+用法：
+self::$staticProperty;
+self::sataticMothed();
+parent::$staticProperty;
+parent::Mothed();
+
+```php
+<?php
+
+	// 使用$this,还是使用parent
+	class A {
+		public function a1() {
+			echo 'this is class function a1()';
+		}
+		public function a2() {
+			echo 'this is class function a2()';
+		}
+	}
+	
+	class B extends A {
+		public function b1() {
+			$this->a1();
+		}
+		public function b2() {
+			parent::a2();
+		}
+	}
+	
+	$b = new B();
+	$b->b1();
+	$b->b2();
+	
+	// 如果从速度上看，理论上 parent::稍快一点点.
+	// 因为在子类寻找a1方法,寻找不到，再去其父类寻找.
+	
+	// 从面向对象角度看, 继承过来的，就是自己的。
+	// $this 更符合面向对象的思想.
+	
+?>
+```
+
+# 单例模式
+
+```
+场景：
+多人协同开发，都需要调用mysql类的实例。
+
+A:
+$mysql = new Mysql();
+$mysql->query(); // ...
+// 测试通过
+
+B:
+$db = new Mysql();
+// 测试通过
+// ...
+
+
+代码合并到一起:
+$mysql = new Mysql();
+$mysql->query(); // ...
+$db = new Mysql();
+
+
+问题：
+两个mysql类的实例，
+而且，每new一下，还要连接一次数据库。
+显然，一个页面，有一个mysql类的实例就够了。
+如果限制，让多人开发，无论你怎么操作，只能得到一个对象?
+
+使用单例模式来解决这种状况.
 
 
 
