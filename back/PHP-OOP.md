@@ -1124,6 +1124,900 @@ $db = new Mysql();
 使用单例模式来解决这种状况.
 
 
+**final**
+
+该关键词，在PHP中，可以修饰类，修饰方法名，但不能修改属性。
+final修改类，表示此类，不能被继承.
+
+```php
+<?php
+
+	final class Human {
+		
+	} 
+	
+	class Stu extends Human {
+		
+	} 
+	// 报错，无法final类 无法继承	
+?> 
+```
+
+final修饰方法的时候，表示此方法不影响继承，不能被重写。
+
+```php
+<?php
+	class Human {
+		final public function say() {
+			echo 'SAY';
+		}
+		
+	}
+	class Stu extends Human {
+		public function pink() {
+			echo 'PINK';
+		} 
+		public function say() { // 重写失败
+			echo 'SAAA';
+		}
+	}
+	
+	$s = new Stu();
+	
+	$s->say();
+	
+?> 
+```
+单例模式主要思路：
+1. 保护或私有构造函数 --> 防止外部实例化
+2. 内部开放一个公共的静态方法 --> 负责实例化
+3. 类中有一个静态属性存放对象 --> 在公共的静态方法中，把对象存放在该静态属性上.
+4. clone
 
 
+# 魔术方法
 
+魔术方法：
+指某些情况下，会自动调用的方法，称之为魔术方法。
+在PHP面向对象中，提供了魔术方法，特点，都是以双下划线开头`__`
+
+__construct : 构造方法
+__destruct : 析构方法
+__clone : 克隆
+
+
+__construct()， __destruct()， __call()， __callStatic()， __get()， __set()， __isset()， __unset()， __sleep()， __wakeup()， __toString()， __invoke()， __set_state()， __clone() 和 __debugInfo() 等方法在 PHP 中被称为"魔术方法"（Magic methods）。
+
+
+框架中使用的魔术方法：
+`__call()`,`__callStatic()`,`__get()`,`__set()`,`__inset()`,`__unset()`.
+
+
+> __get
+
+当调用一个权限上不允许调用的属性时，`__get`魔术方法就会自动调用.并且自动传递一个参数，参数值是想要获取的属性名.
+
+流程:
+$m->age 无权 --> __get(get)
+$m->firend 没有此属性 --> __get(get)。
+
+通过`__get`就有了一个友好的处理机会，就能够自定义用户访问时的相关处理行为
+ 
+
+> __set
+
+`__set`的作用：
+当为无权操作的属性赋值时，或不存在的属性赋值。
+`__set()`自动调用，并且传递两个参数：`属性名` 和 `属性值`
+
+
+> __isset & __unset
+
+__isset 判断属性是否存在
+当使用 `isset()` 判断对象不可见的属性(protected/private/不存在的属性)，会是 `__isset()` 执行.
+
+
+友好操作 
+__unset()方法
+当使用`unset()` 销毁对象的不可见的属性时(protected/private/不存在的属性)，会引发`__unset()` 执行.
+
+
+# 魔术方法在框架中的应用
+
+```
+
+<?php
+
+// 思路上实现：
+
+	class UserModel {
+		
+		protected $emial = 'zf@gmail.com';
+		protected $data = array();
+		
+		
+		// 设置属性
+		public function __set( $key, $val ) {
+
+			$this->data[$key] = $val;
+			
+		}
+		
+		// 获取
+		public function __get( $attr ) {
+			return isset($this->data[$attr]) ? $this->data[$attr] : NULL;
+		}
+		
+		// unset
+		public function __unset( $attr ) {
+			if ( isset($attr) ) {
+				unset($this->data[$attr]);
+			}
+		}
+		
+		// isset
+		public function __isset( $attr ) {
+			return isset($this->data[$attr]);			
+		}	
+		
+		// 插入		
+		public function add() {
+			
+			$sql = "insert into table ( ". implode(',', array_keys($this->data)) ." ) values( ". implode(',', array_values($this->data)) ." )";
+			
+			return $sql;
+			
+		}
+		
+	}
+
+	$userModel = new UserModel();
+	$userModel->username = 'xixi';
+	$userModel->emial = 'xixi@qq.com';
+	
+?>
+
+```
+
+# __call & __callStatic方法及项目应用
+
+**__call**
+
+类中的不可见方法(protected/private/不存在的方法)时，`__call`执行，并传入两个参数，参数1：函数名。参数2：一个参数组成的数组.
+
+
+**__callStatic**
+
+调用不可见(不存在或者权限不允许)的静态方法，自动调用.并传入两个参数，参数1：函数名。参数2：一个参数组成的数组.
+
+```php
+<meta charset="UTF-8"/>
+<?php
+
+	class Human {
+		
+		public function hello() {
+			echo 'hello';
+		}
+		
+		static public function __callStatic( $method, $arg ) {
+			echo '类调用',$method;
+			print_r($arg);
+			
+		}
+		public function __call( $method, $arguments ) {
+			
+			echo '对象调用'.$method;
+			print_r( $arguments );
+			
+		}
+		
+		private function pink() {
+			echo 'pink';
+		}
+		
+		static public $zf = 'zf';
+		static public function red() {
+			echo self::$zf;
+			echo '<br/>red<br/>';
+		}
+		
+	}
+	
+	$h = new Human();
+	
+	Human::tan('aa');
+	Human::red();
+	
+//	$h->hello();
+//	$h->say('19',123);
+
+?>
+```
+
+# 重写与重载
+
+重写/覆盖 (override): 子类重写了父类的同名方法.
+
+```php
+<?php
+
+	class Human {
+		public function say() {
+			echo 'chi';
+		}
+	}
+	
+	class Stu extends Human {
+		public function say() {
+			echo 'Stu chi';
+		}
+	}
+	
+	$zf = new Stu();
+	$zf->say(); // 覆盖/重写  override
+	
+?>
+```
+
+重载(overload): 存在多个同名方法，但参数类型/个数不同，传入不同参数，调用不同的方法.
+但是在PHP中，不允许多个同名方法. 因此，不能完成Java，C++中的这种重载。但是，PHP的灵活性，能够达到重载效果。
+
+```php
+<?php
+class Clac {
+	public function area() {
+		// 判断调用area调用的参数个数
+		$args = func_get_args();
+		
+		if ( count($args) == 1 ) {
+			return 3.14 * $args[0] * $args[0]; 
+		} elseif ( count($args) == 2 ) {
+			return $args[0] * $args[1];
+		} else {
+			return '??';
+		}
+		
+	}
+}
+
+$c = new Clac();
+echo $c->area(10,20);	
+?>
+```
+
+# 类常量&魔术变量与延期绑定
+
+
+定义常量：define('常量名', '常量值');
+define定义的常量，全局有效。
+无论是在页面内，在类内，函数内都可以访问。
+
+**类常量**
+
+定义在类内发挥作用的常量:
+1. 作用域在类内，类似于静态属性。
+2. 又是常量，则不可修改。
+
+其实就是**不可改变的静态属性**
+
+类常量 在类内 用 `const` 声明即可.
+不能是返回值，不能是变量，只能是直接量.
+前面不用加修饰符，而且权限是public的，即外部也可访问。
+
+```php
+<?php
+
+// 常量  define('常量名', '常量值');
+
+define('ACC', 'xixi');
+
+class Human {
+	const HEAD = 1;
+	public static function show() {
+		echo ACC,'<br />';
+		echo self::HEAD; 
+	}
+}
+
+Human::show();
+
+echo Human::HEAD;
+
+?>
+```
+
+**魔术常量**
+
+特性：
+1. 无法手动修改它的值 -- 常量
+2. 但是值又是随环境变动 -- 魔术
+
+
+魔术常量：
+__FILE__ ： 返回当前文件路径. 在框架开发或者是网站初始化脚本，用来计算网站的根目录.
+
+__LINE__ : 返回当前的行号。 在框架中，可以用来debug时，记录错误信息。
+
+
+__CLASS__ : 返回当前的类名
+__METHOD__ : 返回当前的方法名
+
+
+```php
+<?php
+class Human {
+	public static function t() {
+		echo __CLASS__; // Human
+		echo __METHOD__; // Human::t
+		echo __FUNCTION__; //t
+	}
+}
+
+Human::t();
+?>
+```
+
+**延迟绑定/后期绑定**
+
+static优先寻找子类. 
+
+```php
+<?php
+
+	// 延迟绑定/后期绑定
+	
+	class Human {
+		public static function whoami() {
+			echo '父类whoami';
+		}
+		public static function say() {
+			self::whoami(); // 子类内没有say方法，找到了父类这里
+											// 这里的self指的是父类.
+		}
+		public static function say2() {
+			static::whoami(); // 子类没有say2方法，又找到父类这里。
+												// 但是父类用static::whoami;
+												// 指调用你的子类自己的whoami方法 		
+		}
+	}
+	
+	class Stu extends Human {
+		
+		public static function whoami() {
+			echo '子类whoami';
+		}
+		
+	}
+	
+	Stu::say();
+	Stu::say2();
+
+?>
+```
+
+写的多了，测试的多了,自然也就熟悉了。
+
+
+# 抽象类
+
+抽象类作用：无法实例化。
+
+类前添加 abstract, 此类就成为抽象类，无法实例化。
+专门用作继承,子类重写.
+
+
+总结：
+语法：
+类前 加 abstract 是抽象类
+方法前加 abstract 是抽象方法
+
+特性:
+抽象类不能实例化
+抽象方法不能有方法体
+只能被继承
+有抽象方法，则此类必是抽象类。
+抽象类，未必有抽象方法。(即便全是具体方法，但类是抽象的，也不能实例化)
+
+
+```php
+<?php
+
+	// 构想，存在脑子中的抽象，只能在图纸化，并不能实例化。
+	// 类没有具体的方法去实现，还太抽象，
+	// 因此需要把它做成一个抽象类.
+	abstract class FiyIdea {
+		// 方法也完成不了也是一个抽象方法
+		public abstract function engine(); // 发动机
+			
+		// 方法也完成不了也是一个抽象方法
+		public abstract function blance(); // 平衡舵
+			
+	}
+	
+	// 实现发动机
+	abstract class Rocket extends FiyIdea {
+		
+		// 实现 引擎，方法并不抽象
+		public function engine() {
+			echo '点燃火药 。<br />';
+		}
+		
+		// 没有实现平衡舵，对于Rocket 类来说，也是一个抽象类
+			
+	}
+	
+	// 所有的抽象方法都已经实现了
+	class Fly extends Rocket {
+		
+		public function engine() {
+			echo '有力一扔  <br />';
+		}
+		
+		public function blance() {
+			echo '两个纸羽翼<br />';
+		}
+		
+		public function start() {
+			$this->engine();	
+			
+			for ( $i=0; $i<10; $i++ ) {
+				$this->blance();
+				echo '平稳<br/>';
+			}
+			
+		}
+		
+	}
+	
+	$apache = new Fly(); 
+	$apache->start();
+
+?>
+```
+
+抽象类的意义：生成模板，规范方法.
+添加优于修改
+
+介绍面向对象的时候，会介绍`可插拔特性`
+
+
+```php
+<?php
+
+	// 抽象类的意义
+	
+	// 场景
+//	feacbook 多国语言欢迎界面
+	
+	// user登陆， 有一个 c 字段，是其国家
+	// 当各国人登陆时，看到各国语言的欢迎界面
+	
+	// 各个小组,继承.
+	
+	abstract class Welcome {
+		public abstract function wel();
+	}
+	
+	class China extends Welcome {
+		public function wel() {
+			echo 'china';
+		}
+	}
+	
+	class Japan extends Welcome {
+		public function wel() {
+			echo 'japan';
+		}
+	}
+	
+	class English extends Welcome {
+		public function wel() {
+			echo 'english';
+		}
+	} 
+	
+	$c = 'english';
+	$wel = new $c;
+	
+	$wel->wel();
+	
+?>
+```
+
+# 延迟绑定2
+
+类常量
+延迟绑定
+抽象方法
+
+类常量/静态属性/方法 --> 都是存放在类空间.
+
+类常量 用 `const` 来定义.
+
+**延迟绑定**
+
+延迟绑定/后期绑定也称之为：运行期绑定。
+运行的时候属于谁,就在谁的环境中执行.把方法抑制到该环境中执行 （在类的层面中）
+
+类的self的定义不是以定义时为准，而是以运算时的计算结果为准.
+
+```php
+<?php
+
+	class Animal {
+		const age = 1;
+		public static $leg = 4;
+		
+		public static function cry() {
+			echo '555<br/>';
+		}
+		public static function t1() {
+			self::cry(); // 555
+			echo self::age,'<br/>'; // 1 
+			echo self::$leg,'<br/>'; // 4
+		}
+		public static function t2() {
+			static::cry(); // yingying 
+			echo static::age,'<br />'; // 16
+			echo static::$leg,'<br />'; // 2
+		}
+	}
+	
+	class Human extends Animal {
+		const age = 30;
+		public static $leg = 2;
+		public static function cry() {
+			echo 'wawa <br/>';
+		} 
+		
+	}
+	
+	class Stu extends Human {
+		const age = 16;
+//		public static $leg = 3;
+		public static function cry() {
+			echo 'yingying <br/>';
+		}
+	}
+	
+	Stu::t1();
+	Stu::t2();
+	
+?>
+```
+
+# 接口
+
+观点：接口是更抽象的类. 是否准确
+
+类： 是某一类事物的抽象，是某类对象的蓝图.
+
+接口的方法本身就是抽象的，不需要有方法体，也不必加abstract.
+
+
+类如果是一种事物/动物的抽象,那么接口则是事物/动物的功能的抽象.
+即，再把他们的功能各拆成小块.自由组合成新的类.
+
+```php
+<?php
+
+	interface animal {
+		public function eat();
+	}
+	
+	interface monkey {
+		public function run();
+		public function cry();
+	}
+	
+	interface wisdom {
+		public function think();
+	}
+	
+	interface bird {
+		public function fly();
+	}
+	
+	// 每个类中的这种功能拆分出来.
+	class Human implements animal, monkey, wisdom {
+		public function eat() {
+			echo 'eat';
+		}
+		public function run() {
+			echo 'run';
+		}			
+		public function cry() {
+			echo 'ku';
+		}
+		public function think() {
+			echo 'MISS';
+		}
+	}	
+	
+	$human = new Human();
+	
+	$human->think();
+	
+?>
+
+```
+
+# 接口与应用场景
+
+接口是零件
+可以用多种零件组合出一种新物种.
+
+特性：
+1. 接口本身即是抽象的，内部声明的方法，默认也是抽象的，不用加`abstract`
+2. 一个类可以一次性实现多个接口.
+语法：`class 类名 implements 接口名1, 接口名2`;
+3. 接口也可以继承，使用`extends`关键字
+4. 接口不能有属性，是一堆方法的描述/说明
+5. 接口就是供组装成类用的，方法只能是public
+6. 类可以实现多接口.
+
+
+面向对象思想其中的一个观点:
+做的越多，越容易犯错.
+平衡分离
+
+
+抽象类 -- 定义类模板 -- 具体子类实现.
+
+```php
+<?php
+
+	// 抽象的数据库类
+	abstract class db {
+		
+		public abstract function connect( $h, $u, $p );
+		
+		public abstract function query( $sql );
+		
+		public abstract function close(); 
+			
+	}
+	
+	class Mysql extends db {
+		public function connect( $h, $u, $p ) {
+			return true;
+		}
+		public function query( $sql ) {
+			
+		}
+		public function close() {
+			
+		}
+		public function aa() {}
+	}
+	
+	// interface
+	interface UserBase {
+		public function login($u, $p);
+		public function logout();
+	}
+	
+	interface UserMsg {
+		public function writeMsg($to, $title, $content);
+		public function readMsg($from, $title);
+	}
+	
+	interface Userfrom {
+		public function spit($to);			
+		public function shoLove($to);
+	}
+	
+	
+	// 通过接口，可以规范开发
+	// 接口强制统一了类的功能
+	
+	class User implements UserBase {
+		public function login( $u, $p ) {
+			
+		}
+		public function logout() {
+			
+		}
+		public function xi() {
+			
+		}
+	}
+
+?>
+```
+
+# 类的自动加载
+
+如果调用某个不存在的类，在报错之前，还有一次介入机会 `__autoload`函数,系统会调用__autolaod()函数，并把调用的**类名**自动传递给`__autoload`函数，可以在`__autoload`里 加载需要的类.
+
+
+函数内可以写任何合法的PHP代码，包含再声明一个函数/类
+
+```php
+<?php
+
+	// 自动加载
+	
+	function __autoload( $c ) {
+		
+		require('./'. $c . '.php');
+		
+	}
+	
+	$zf = new HumanModel();
+	$zf->t();
+	
+	echo '<hr/>';
+	
+	function say() {
+		class Bird {
+			public function stirng() {
+				echo 'stirng..';
+			}
+		}
+	}
+	
+	say(); 
+	Bird::stirng();
+	
+?>
+```
+
+自动加载并不是只可以使用 `__autoload`，也可以使用指定一个自定义 函数.(需要让告知系统，自定义函数为自动加载函数)
+使用`spl_auto_register`
+
+```php
+<?php
+
+	// 告知系统，把`zidongjiazai`注册成为自动加载功能的函数
+	spl_autoload_register('zidongjiazai');	
+
+	function zidongjiazai( $c ) {
+		
+		require('./'. $c . '.php');	
+			
+	}
+	
+	$h = new HumanModel();
+	
+	$h->t();
+	
+?>
+```
+
+`__autolaod`是一个函数
+自定义一个自动加载函数，能否注册类的一个静态方法 当成自动加载函数.
+
+```php
+<?php
+
+	spl_autoload_register('Pink::autoload');
+
+	class Pink {
+		public static function autoload( $c ) {
+			require('./' . $c . '.php');
+		}
+	}
+	
+	$human = new HumanModel();
+	
+	$human->t();	
+
+?>
+```
+
+# 异常处理
+
+new 一个对象，半路中出现问题，如何检测. 中间过程出现错误，始终返回的一个对象，残缺的对象也是对象，无法判断是否能够成功。通过 异常处理，出现错误，就留在原地等待。
+
+
+> 如何发送错误的信号
+
+```
+$e = new Exception('errorInfo', 'errorCode');
+throw $e;
+```
+
+> 如何接受错误的信号
+
+
+```
+try {
+	$mysql = new Mysql();
+} catch( Exception $e ) {
+	echo $e->getMessage();
+	echo $e->getCode();
+}
+```
+-----
+
+```php
+<?php
+
+	// 异常处理
+	
+	error_reporting(0); // 关闭所有错误报告 
+	
+	class Mysql {
+		protected $conn = null;
+		public function __construct() {
+			
+			$this->conn = mysql_connect('localhost', 'root', '123');
+			
+			if ( !$this->conn ) {
+				// 发送错误信息
+				
+				// 在PHP中，内置对象
+				// Exception 类的对象 
+				// new Exception('错误原因', '错误代码');
+				$e = new Exception('error', 9); 
+				throw $e; // throw 抛出/扔出
+				
+			}
+			
+		}
+	}
+
+	try { // 测试, 捕捉错误信息
+		$mysql = new Mysql(); // 返回mysql对象，并且自动连接上了数据库 
+	} catch ( Exception $e ) { 
+		echo '捕捉到错误信息为：'. $e->getMessage(),'<br/>';
+		echo '错误代码为：'. $e->getCode().'<br/>';
+		echo '错误文件为：'. $e->getFile().'<br/>';
+		echo '错误行：'. $e->getLine();		
+	}
+	
+	var_dump($mysql);
+	
+	if ( $mysql instanceof Mysql ) {
+		echo '创建成功';
+	} else {
+		echo '创建失败';
+	}
+	
+?>
+```
+
+如果出现抛出错误，没有接受，视为语法错误。
+
+```php
+<?php
+
+	class Mysql {
+		protected $conn = null;
+		public function __construct() {
+			
+			$this->conn = @mysql_connect('localhost', 'root', '123');
+			
+			if ( !$this->conn ) {
+				$e = new Exception('error', 9); 
+				throw $e; // throw 抛出/扔出
+			}
+			
+		}
+	}
+	
+	// 内部抛出异常，外部没有 catch,并处理.
+	$mysql = new mysql();
+	
+?>
+```
+
+如果有多种抛出错误信息，接收的时候，可以写多个catch
+
+```php
+<?php
+	try { // 测试, 捕捉错误信息
+		$mysql = new Mysql();
+	} catch ( Exception $e ) { 
+		echo '捕捉到错误信息为：'. $e->getMessage(),'<br/>';
+		echo '错误代码为：'. $e->getCode().'<br/>';
+	} catch ( Exception $o ) {
+		echo 'error', $o;
+		echo '捕捉到错误信息为：'. $e->getMessage(),'<br/>';
+		echo '错误代码为：'. $e->getCode().'<br/>';
+	}
+
+?>
+```
