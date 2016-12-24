@@ -457,7 +457,6 @@ alter table 表名 modify 列名 新类型 新参数;
 alter table m1 modify gener char(4) not null default ''; 
 ```
 
-
 修改列类型和列名
 alter table 表名 change 旧列名 新列名 新类型 新参数
 
