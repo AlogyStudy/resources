@@ -1,0 +1,61 @@
+1. /bin   binary二进制文件，可执行程序文件
+          ls   su    pwd    cd
+          内部文件是一些指令信息
+
+2. /sbin  super binary超级的二进制文件目录
+          超级管理员root可以执行的命令文件
+
+3. /dev   device设备目录
+          在linux系统里边全部设备都使用文件表示
+          /dev/cdrom 硬件光驱设备
+          /dev/sda1  分区设备
+      
+4. /home  家目录
+          给系统每创建一个用户，在该目录下就会自动
+          创建一个对应目录(目录名字与当前用户名字一致)，
+          这个目录就是这个用户使用。
+          的家目录
+          具体用户登录系统会默认切换到自己的家目录
+
+5. /proc  内存映射目录
+          查看系统的相关信息
+
+6. /var   variable  可变的、易变得
+          开发的php程序适合放到/var目录
+          /var/www/html
+          /var/www/部署php程序
+    
+7. /boot    系统启动目录
+          /boot/initrd-2.6.18-194.el5.img
+          linux内核版本是2.6版本 2.5M  核心版
+          CentOS 5.5 4G  发行版
+          发行版：核心版+外围软件(编译器、安装程序、解释器等等)
+                  red hat    蓝点  红旗   ubuntu   debian等等
+                  发行版的版号由发型公司自定义版本号码
+                  CentOS=redhat+相关软件
+                  linux系统是自由软件 itcast
+          核心版：林纳斯  开发的
+
+8. /etc   系统核心配置文件
+          /etc/passwd存放用户信息
+
+9. /lib   library  资源库、函数库。
+      
+10. /mnt  mount挂载
+          光驱、u盘、移动硬盘
+          mnt相当于我们window系统的h盘符、k盘符、j盘符
+          该目录可以不使用，随便一个普通目录都可以实现挂载
+
+11. /root root管理员家目录
+
+12. /usr   user用户目录
+           等于window系统的Program file目录
+           以后系统软件就安装到usr目录
+
+13. /usr/bin
+    /usr/sbin
+    通过安装具体软件可以使用的一些指令
+
+
+           
+
