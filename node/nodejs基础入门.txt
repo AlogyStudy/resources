@@ -1,0 +1,261 @@
+1、nodejs编写HelloWord，了解什么是nodejs，nodejs有什么特点
+
+2、nodejs的模块怎么用，如何载入别的模块(require)，如何给另一模块调用(module, module.exports)，自己编写的模块与
+   node_modules下模块有什么区别，载入顺序是怎样的；自己写一个编写nodejs的一个模块；
+
+3、npm是什么，npm工具如何使用
+   npm install 
+   npm init 
+   npm install xxx
+   npm install xxx --save 
+   npm install xxx --save-dev
+   npm remove xxx 
+   npm remove xxx --save
+   npm remove xxx --save--dev
+   npm update xxx
+   package.json文件中各个项的意思，理解它们是干什么的
+
+2、http模块有哪些方法
+
+   2.1 使用http模块，模拟GET请求网上的一个网页、图片
+
+   2.2 这个请求中添加headers 如Cookie、Content-Type、Timeout、req获取协议类型，主机地址，端口，状态码，设置字符编码、User-Agent,掌握headers中添加各种参数的方法
+ 
+   2.3 模拟POST请求，提交到自己的后台，以Content-Type为formData、application/x-www-form-urlencoded、application/json 三种方式分别提交，其中formData要求上传文件
+
+   2.4 记住http模块中重要的几个方法  res.on('data', function(chunk){})  req.on('error', function(error){}) req.end 等方法
+
+   2.5 掌握 querystring, url库的使用方法，对url地址栏进行解析，掌握res.setHeader中  text/explain, text/json
+       text/html等几种类型的理解
+   
+   2.6 使用cheerio库解析一个网页中的图片，并下载网页中的图片
+
+3、fs模块
+   3.1 使用fs模块读、写一个文本文件，掌握readFile、writeFile、 readFileSync、writeFileSync、追加方式的使用方法，理解其中的参数的意思，如文件的mode=0777，记住最好
+
+   3.2 Buffer的使用，如何使用Buffer读写一个文件，如何刷新缓冲区；掌握文件流Stream，文件流事件监听器open、data、close等事件的捕获，中断和停止resume, pause；掌握pipe管道       流读写文件；
+
+   3.3 fs创建、删除目录，创建多级目录，读取多级目录
+
+   3.4 fs修改目录权限，移动文件/文件夹
+
+   3.5 实现一个拷贝文件的模块，分别使用readFileSync+writeFileSync与readStream+writeStream方式
+
+4、掌握events模块，理解什么是事件监听，如何创建事件监听器EventEmitter, 添加事件监听器addListener，触发事件监听emit
+
+5、掌握path模块
+   5.1 获取绝对路径path.isAbsolute
+   5.2 获取路径中的文件夹部分 path.dirname
+   5.3 获取路径点之后的部分，相当于获取后缀 path.extname
+   5.4 将路径中的字符串转换为对象 path.parse 如 xxxx?a=b&c=d  转为{a:b, c:d}
+
+6、OS 模块
+   6.1 操作系统主机名 os.hostname()
+   6.2 操作系统名 os.platform()
+   6.3 操作系统的发行版本 os.release()
+   6.4 系统内存总量 os.totalmem()
+   6.6 CPU信息 os.cpus()
+   6.7 获取网卡列表 os.networkInterfaces()
+
+7、nodejs全局对象
+   7.1 __filename 脚本文件所在位置的绝对路径
+   7.2 setTimeout、clearTimeout、setInterval、clearInterval、console.log、console.error、console.dir
+   7.3 rocess模块
+      7.3.1 process.stdin  process.stdout实现一个命令行窗口，输入中、英文、数字，都可以反馈；
+      7.3.2 触发process.on('exit', function(){})
+      7.3.3 process.env 返回当前环境变量，develop, test, production等，若是由pm2管理，则在app.json启动文件中设定
+
+8、request模块
+   内容同第2点的http模块
+
+9、async模块
+   series(tasks, [callback]) （多个函数依次执行，之间没有数据交换）
+   parallel(tasks, [callback]) （多个函数并行执行）
+   waterfall(tasks, [callback]) （多个函数依次执行，且前一个的输出为后一个的输入）
+   auto(tasks, [callback]) （多个函数有依赖关系，有的并行执行，有的依次执行）
+   whilst(test, fn, callback)（用可于异步调用的while）
+   until(test, fn, callback) （与while相似，但判断条件相反）
+   queue （可设定worker数量的队列）
+   iterator(tasks) （将几个函数包装为iterator）
+   apply(function, arguments..) （给函数预绑定参数）
+   nextTick(callback) （在nodejs与浏览器两边行为一致）
+
+
+10、q模块(Promise的使用)
+
+  10.1、普通的promise返回两个函数，第一个成功 .then(result)，第二个失败时触发调用 .fail(error) 类似try catch finally中的 finally用于回收资源的（关闭数据库，服务）.fin        ()函数
+
+  10.2、两种链式操作，
+        一种是写在函数内部的回调模式
+        return getUsername()
+        .then(function (username) {
+            return getUser(username)
+            .then(function (user) {
+                // if we get here without an error, 
+                // the value returned here 
+                // or the exception thrown here 
+                // resolves the promise returned 
+                // by the first line 
+            })
+        });
+        一种是函数外部的，线性模式
+        return getUsername()
+        .then(function (username) {
+            return getUser(username);
+        })
+        .then(function (user) {
+            // if we get here without an error, 
+            // the value returned here 
+            // or the exception thrown here 
+            // resolves the promise returned 
+            // by the first line 
+        });
+  10.3、Q.all  所有promises都成功，则执行then(result)函数，有一个拒绝reject，则立即退出，
+        并进入fail(error)函数
+
+  10.4、Q.allSettled，则等待所有的promises执行完成后，一起fulfilled（完成态）, 或者rejected
+       （拒绝态）
+
+  10.5、Q.any 只要promises数组中的任何一个执行成功，则执行则执行then(result)函数；所有项都失败时，
+        进入fail(error)函数
+
+  10.6、spread 函数允许promise返回多个值
+
+  10.7、函数队列，递归条用，给定初始值，链式调用
+      普通版本
+      return funcs.reduce(function (soFar, f) {
+         return soFar.then(f);
+      }, Q(initialVal));
+      紧凑版本
+      return funcs.reduce(Q.when, Q(initialVal));
+
+  10.8、进展提醒 Progress Notification
+        then函数的第三个函数，或者promise.progress(function(progress){})
+
+  10.9、执行结束 End
+        结束链式promises，使用.done函数
+
+  10.10、以上1-7假定你已经创建了promise的情况下，如果要新建空白promise，则需要调用Q.fcall
+        return Q.fcall(function () {
+            return 10;
+        });
+
+  10.11、使用Deferreds创建promise对象
+        var deferred = Q.defer();
+        FS.readFile("foo.txt", "utf-8", function (error, text) {
+            if (error) {
+                deferred.reject(new Error(error));
+            } else {
+                deferred.resolve(text);
+            }
+        });
+        return deferred.promise;
+  10.12、使用Q.delay创建promise对象
+        function delay(ms) {
+            var deferred = Q.defer();
+            setTimeout(deferred.resolve, ms);
+            return deferred.promise;
+        }
+  10.13、使用 Q.timeout创建promise对象
+        function timeout(promise, ms) {
+            var deferred = Q.defer();
+            Q.when(promise, deferred.resolve);
+            delay(ms).then(function () {
+                deferred.reject(new Error("Timed out"));
+            });
+            return deferred.promise;
+        }
+        当然可以使用deferred.notify来执行，进展提醒 Progress Notification
+        function requestOkText(url) {
+          var request = new XMLHttpRequest();
+          var deferred = Q.defer();
+
+          request.open("GET", url, true);
+          request.onload = onload;
+          request.onerror = onerror;
+          request.onprogress = onprogress;
+          request.send();
+          function onload() {
+            if (request.status === 200) {
+              deferred.resolve(request.responseText);
+            } else {
+          deferred.reject(new Error("Status code was " + request.status ));
+            }
+          }
+          function onerror() {
+            deferred.reject(new Error("Can't XHR " + JSON.stringify(url)));
+          }
+          function onprogress(event) {
+            deferred.notify(event.loaded / event.total);
+          }
+          return deferred.promise;
+        }
+
+        也可以使用Q.promise来执行，进展提醒Promise Notification
+        function requestOkText(url) {
+          return Q.Promise(function(resolve, reject, notify) {
+            var request = new XMLHttpRequest();
+            request.open("GET", url, true);
+            request.onload = onload;
+            request.onerror = onerror;
+            request.onprogress = onprogress;
+            request.send();
+            function onload() {
+              if (request.status === 200) {
+                resolve(request.responseText);
+              } else {
+                reject(new Error("Status code was " + request.status));
+              }
+            }
+            function onerror() {
+              reject(new Error("Can't XHR " + JSON.stringify(url)));
+            }
+            function onprogress(event) {
+              notify(event.loaded / event.total);
+            }
+          });
+        }
+
+11、express模块
+   11.1、掌握使用express各种模块创建一个http服务器；
+   11.2、request 和 response 对象的方法：
+        Request 对象 - request 对象表示 HTTP 请求，包含了请求查询字符串，参数，内容，HTTP 头部等属性。常见属性有：
+        req.app：当callback为外部文件时，用req.app访问express的实例
+        req.baseUrl：获取路由当前安装的URL路径
+        req.body / req.cookies：获得「请求主体」/ Cookies
+        req.fresh / req.stale：判断请求是否还「新鲜」
+        req.hostname / req.ip：获取主机名和IP地址
+        req.originalUrl：获取原始请求URL
+        req.params：获取路由的parameters
+        req.path：获取请求路径
+        req.protocol：获取协议类型
+        req.query：获取URL的查询参数串
+        req.route：获取当前匹配的路由
+        req.subdomains：获取子域名
+        req.accpets（）：检查请求的Accept头的请求类型
+        req.acceptsCharsets / req.acceptsEncodings / req.acceptsLanguages
+        req.get（）：获取指定的HTTP请求头
+        req.is（）：判断请求头Content-Type的MIME类型
+        Response 对象 - response 对象表示 HTTP 响应，即在接收到请求时向客户端发送的 HTTP 响应数据。常见属性有：
+        res.app：同req.app一样
+        res.append（）：追加指定HTTP头
+        res.set（）在res.append（）后将重置之前设置的头
+        res.cookie（name，value [，option]）：设置Cookie
+        opition: domain / expires / httpOnly / maxAge / path / secure / signed
+        res.clearCookie（）：清除Cookie
+        res.download（）：传送指定路径的文件
+        res.get（）：返回指定的HTTP头
+        res.json（）：传送JSON响应
+        res.jsonp（）：传送JSONP响应
+        res.location（）：只设置响应的Location HTTP头，不设置状态码或者close response
+        res.redirect（）：设置响应的Location HTTP头，并且设置状态码302
+        res.send（）：传送HTTP响应
+        res.sendFile（path [，options] [，fn]）：传送指定路径的文件 -会自动根据文件extension设定Content-Type
+        res.set（）：设置HTTP头，传入object可以一次设置多个头
+        res.status（）：设置HTTP状态码
+        res.type（）：设置Content-Type的MIME类型
+   11.3、掌握express中间件写法
+   11.4、掌握express路由的写法
+   11.5、express.static 中间件来设置静态文件路径
+   11.6、express上传文件方法，表单 enctype 属性设置为 multipart/form-data， req.files
+   11.7、cookieParser来管理Cookie
